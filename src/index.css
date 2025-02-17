@@ -1,0 +1,82 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+body{
+    background-color: rgb(65, 65, 65);
+    margin: 5rem;
+}
+
+.CreateButton{
+  background-color: chocolate;
+  position: relative;
+  top: -4rem;
+  left: 15rem;
+  width: 4rem;
+  height: 1.8rem;
+  transition: all 0.2s;
+}
+
+.CreateButton:hover{
+  cursor: pointer;
+  background-color: brown;
+  transform: scale(1.2);
+  text-transform: uppercase;
+}
+
+form{
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  background-color: rgb(61, 57, 52);
+  border: 0.1rem solid #000;
+  width: 10%;
+  align-items: center;
+  padding: 2rem
+}
+
+::placeholder{
+  text-align: center;
+  font-weight: bold;
+}
+
+form input{
+  width: 10rem;
+  height: 2rem;
+}
+
+.formButton{
+  width: 8rem;
+  height: 1.5rem;
+  background-color: rgb(64, 64, 223);
+}
+
+.formButton:hover{
+  transition: all 0.2s;
+  transform: scale(1.2);
+  cursor: pointer;
+  text-transform: uppercase;
+  background-color: blueviolet;
+}
+
+.Xbutton{
+  position: relative;
+  top: -1.5rem;
+  left: 4rem;
+  width: 2rem;
+  height: 2rem;
+  background-color: chocolate;
+  transition: all 0.2s;
+}
+
+.Xbutton:hover{
+ background-color: brown;
+ transform: scale(1.2);
+ cursor: pointer;
+ text-transform: uppercase;
+}
+
+
+
