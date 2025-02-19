@@ -1,82 +1,38 @@
 *{
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-  }
-  
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
 body{
-    background-color: rgb(65, 65, 65);
-    margin: 5rem;
+  background-color: darkgray;
 }
 
-.CreateButton{
-  background-color: chocolate;
-  position: relative;
-  top: -4rem;
-  left: 15rem;
-  width: 4rem;
-  height: 1.8rem;
-  transition: all 0.2s;
-}
-
-.CreateButton:hover{
-  cursor: pointer;
-  background-color: brown;
-  transform: scale(1.2);
-  text-transform: uppercase;
-}
-
-form{
+.cardContainer{
   display: flex;
-  flex-direction: column;
-  gap: 0.2rem;
-  background-color: rgb(61, 57, 52);
+  flex-wrap: wrap;
+  margin: 1rem;
+  gap: 1rem;
+}
+
+.CostumCard{
   border: 0.1rem solid #000;
-  width: 10%;
-  align-items: center;
-  padding: 2rem
-}
-
-::placeholder{
+  display: inline-block;
+  width: 18rem;
+  padding: 0.8rem;
   text-align: center;
+}
+
+.CostumCard button{
+  background-color: rgb(255, 162, 0);
   font-weight: bold;
-}
-
-form input{
-  width: 10rem;
+  width: 12rem;
   height: 2rem;
-}
-
-.formButton{
-  width: 8rem;
-  height: 1.5rem;
-  background-color: rgb(64, 64, 223);
-}
-
-.formButton:hover{
   transition: all 0.2s;
+}
+
+.CostumCard button:hover{
   transform: scale(1.2);
   cursor: pointer;
-  text-transform: uppercase;
-  background-color: blueviolet;
+  background-color: rgb(247, 205, 16);
 }
-
-.Xbutton{
-  position: relative;
-  top: -1.5rem;
-  left: 4rem;
-  width: 2rem;
-  height: 2rem;
-  background-color: chocolate;
-  transition: all 0.2s;
-}
-
-.Xbutton:hover{
- background-color: brown;
- transform: scale(1.2);
- cursor: pointer;
- text-transform: uppercase;
-}
-
-
-
