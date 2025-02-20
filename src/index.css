@@ -18,9 +18,18 @@ body{
 .CostumCard{
   border: 0.1rem solid #000;
   display: inline-block;
-  width: 18rem;
+  width: 35rem;
   padding: 0.8rem;
   text-align: center;
+}
+
+.title{
+  font-weight: bold;
+  font-size: 1.5rem;
+  color: rgb(174, 79, 60);
+  border-bottom: 0.1rem solid #000;
+  display: inline-block;
+  margin-bottom: 1rem;
 }
 
 .CostumCard button{

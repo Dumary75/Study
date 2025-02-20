@@ -6,7 +6,7 @@ function BasicExample({img,title,text}) {
     <Card className="CostumCard">
       <Card.Img variant="top" src={img} />
       <Card.Body>
-        <Card.Title>{title}</Card.Title>
+        <Card.Title className='title'>{title}</Card.Title>
         <Card.Text>
             {text}
         </Card.Text>
