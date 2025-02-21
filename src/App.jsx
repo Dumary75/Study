@@ -1,18 +1,11 @@
-import { useEffect } from "react";
-import useLogik from "./useLogic";
-
+import { TodoList } from "./components/TodoList";
 
 function App() {
-const{values} = useLogik({name: 'Chuan'});
-
-
-useEffect(() => {
-  console.log(values)
-});[values]
 
   return (
     <>
-      <h1>swsadsad</h1>
+      <h1>Todo_Test</h1>
+      <TodoList />
     </>
   );
 }
