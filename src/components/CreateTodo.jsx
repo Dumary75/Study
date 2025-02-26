@@ -9,10 +9,10 @@ const modeChanger = () => {
 }
 
 const createTodo = () => {
-
-const newArr = [...todoList,newList]
-setTodoList(newArr)
-console.log(todoList)
+// Safe_Check needed!
+const newArr = [...todoList,newList];
+setTodoList(newArr);
+setNewList([]);
 modeChanger();
 }
 

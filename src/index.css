@@ -54,7 +54,7 @@ form button:hover{
   gap: 1rem;
   padding: 0.4rem;
   border: 0.1rem solid #000;
-  width: 8rem;
+  width: 15%;
   margin-left: 3rem;
   color: #FFF;
 }
@@ -71,4 +71,18 @@ form button:hover{
 .Task input:hover{
   cursor: pointer;
   transform: scale(1.4);
+}
+
+.remove_Task{
+  width: 1.4rem;
+  border: 0.1rem solid #000;
+  background-color: #453a3a;
+  transition: all 0.2s;
+}
+
+.remove_Task:hover{
+  cursor: pointer;
+  background-color: #FFF;
+  border: 0.1rem solid red;
+  transform: scale(1.1);
 }
