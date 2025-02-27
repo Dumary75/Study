@@ -4,85 +4,18 @@ margin: 0;
 padding: 0;
 }
 
-body{
-  background-color: #242424;
+.bg_new {
+  width: 100%;
+  height: 35.8rem;
 }
 
-
-h1,h3{
-  color: #FFF;
-  margin-bottom: 2rem;
-  margin-left: 2rem;
-}
-
-.createButton{
-  position: relative;
-  top: -7rem;
-  left: 20rem;
-  width: 6rem;
-  height: 1.5rem;
-  border: 0.15rem solid #000;
-  transition: all 0.2s;
-}
-
-.createButton:hover{
-  transform: scale(1.1);
-  font-weight: bold;
-  cursor: pointer;
-}
-
-form{
-  border: 0.1rem solid #000;
-  display: flex;
-  flex-direction: column;
-  width: 15rem;
-  position: relative;
-  margin: 25%;
-  top: -12rem;
-  left: 10rem;
-  z-index: 1;
-}
-
-form button:hover{
-  cursor: pointer;
-  background-color: gray;
-  font-weight: bold;
-}
-
-.Task{
-  display: flex;
-  gap: 1rem;
-  padding: 0.4rem;
-  border: 0.1rem solid #000;
-  width: 15%;
-  margin-left: 3rem;
-  color: #FFF;
-}
-
-.Task li{
-  list-style: none;
-}
-
-.Task input{
-  transform: scale(1.2);
-  transition: all 0.2s;
-}
-
-.Task input:hover{
-  cursor: pointer;
-  transform: scale(1.4);
-}
-
-.remove_Task{
-  width: 1.4rem;
-  border: 0.1rem solid #000;
-  background-color: #453a3a;
-  transition: all 0.2s;
-}
-
-.remove_Task:hover{
-  cursor: pointer;
+.light{
+  color: #000;
   background-color: #FFF;
-  border: 0.1rem solid red;
-  transform: scale(1.1);
 }
+
+.dark{
+  color: #FFF;
+  background-color: #000;
+}
+
