@@ -1,8 +1,8 @@
 import { useState } from "react";
 
-export function CreateTodo({ todoList, setTodoList }){
+export function CreateTodo({ todoList, setTodoList, newList, setNewList,inputChanger }){
 const[createMode,setCreateMode] = useState(false);
-const[newList,setNewList] = useState();
+
 
 const modeChanger = () => {
     setCreateMode((oldState) => !oldState)
@@ -14,12 +14,6 @@ const newArr = [...todoList,newList];
 setTodoList(newArr);
 setNewList([]);
 modeChanger();
-}
-
-const inputChanger = (event) => {
-    let task = event.target.value;
-    let state = 'active';
-    setNewList({ task,state})
 }
 
     return(

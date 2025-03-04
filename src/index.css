@@ -62,6 +62,7 @@
   
   .Task li{
     list-style: none;
+    width: auto;
   }
   
   .Task input{
@@ -146,4 +147,9 @@
     background-color: #242424;
     color: #FFF;
     cursor: pointer;
+  }
+
+  .EditTodoName{
+    width: 40%;
+    padding: 0.1rem;
   }
