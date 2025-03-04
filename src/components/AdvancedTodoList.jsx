@@ -4,7 +4,15 @@ import { FilterList } from "./FilterList";
 
 export function TodoList(){
 const[todoList,setTodoList] = useState([]);
-const[newList,setNewList] = useState();
+const[newList,setNewList] = useState({});
+
+const inputChanger = (event) => {
+    setNewList({ 
+        task: event.target.value,
+        state: "active",
+        editMode: false
+    });
+};
 
 const removeTask = (index) => {
     const updatedList = todoList.filter((_, i) => i !== index);
@@ -20,20 +28,22 @@ const changeTaskState = (index) => {
 
 const changeEditmode = (index) => {
     let changedTaskList = todoList.map((element, i) =>
-        i === index ? { ...element, editMode: element.editMode === "false" ? "true" : "false" } : element
+        i === index ? { ...element, editMode: !element.editMode ? true : false } : element
     );
     setTodoList(changedTaskList);
 }
 
-const inputChanger = (event) => {
-    let task = event.target.value;
-    let state = 'active';
-    let editMode = 'false';
-    const newArr = [...todoList,newList];
-    setNewList({ task,state,editMode });
-    setTodoList(newArr);
-    setNewList([]);
+const savePressed = (index,event) => {
+    let ChangedTodoName = todoList.map((element, i) =>
+        i === index ? { ...element, 
+            editMode: !element.editMode ? true : false,
+            task: event.target.value
+        } : element
+    );
+    setTodoList(ChangedTodoName);
 }
+
+
 
 
     return(
@@ -52,7 +62,7 @@ const inputChanger = (event) => {
                 <ul>
                 {todoList.map((listitem,index) => {
                    return  <div className={listitem.state === 'active' ? "Task active" : "Task complete"} id={index} key={index}>
-                        {listitem.editMode === 'false' ? 
+                        {!listitem.editMode ? 
                         <>
                         <li>{listitem.task}</li> 
                         <input onChange={() => changeTaskState(index)} type="checkbox" />
@@ -60,8 +70,8 @@ const inputChanger = (event) => {
                         <button onClick={() => changeEditmode(index)} className="EditBotton">Edit</button>
                         </>
                         : <>
-                        <input placeholder={listitem.task} className="EditTodoName" ></input>
-                        <button onClick={() => changeEditmode(index)} className="EditBotton">Save</button>
+                        <input placeholder={listitem.task} className="EditTodoName" onChange={inputChanger}></input>
+                        <button onClick={(event) => savePressed(index, event)} className="EditBotton">Save</button>
                         </> }        
                     </div>
                 })}
