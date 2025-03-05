@@ -37,7 +37,7 @@ const savePressed = (index,event) => {
     let ChangedTodoName = todoList.map((element, i) =>
         i === index ? { ...element, 
             editMode: !element.editMode ? true : false,
-            task: event.target.value
+            task: newList.task
         } : element
     );
     setTodoList(ChangedTodoName);
