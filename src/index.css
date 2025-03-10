@@ -6,7 +6,39 @@
   
   body{
     background-color: #242424;
+    padding-left: 10rem;
+    padding-top: 7rem;
+  }
+
+  h1,h3,p{
+    color: #FFF;
+  }
+
+  button{
+    width: 3rem;
+    height: 1.5rem;
+    margin-left: 1rem;
+    margin-top: 1rem;
+    border: 0.12rem solid #000;
+    transition: all 0.2s;
+    position: relative;
+    left: 3rem;
+  }
+
+  button:hover{
+    transform: scale(1.2);
+    cursor: pointer;
+    background-color: #242424;
+    color: #FFF;
   }
   
+  form{
+    margin-top: 1rem;
+    display: flex;
+    flex-direction: column;
+    width: 15rem;
+  }
+
+
   
   
