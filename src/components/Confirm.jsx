@@ -1,10 +1,15 @@
+import ProgressBar from "./Progressbar"
 
-
-export default function Confirm({ formData, backwardLogic}){
+export default function Confirm({ formData, backwardLogic, progress }){
+let confirm = 0;
 
 const confirmLogic = () => {
-    alert('Data saved!')
-    console.log(formData)
+    if(confirm === 0){
+        alert('Data saved!')
+        console.log(formData)
+        confirm++;
+    } else {alert('Already saved!')}
+
 }
 
     return (
@@ -22,6 +27,7 @@ const confirmLogic = () => {
                 <button onClick={backwardLogic}>Back</button>
                 <button onClick={confirmLogic}>Confirm</button>
             </div>
+            <ProgressBar progress={progress}/>
         </>
     )
 }
