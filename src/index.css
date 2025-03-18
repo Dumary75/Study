@@ -9,4 +9,18 @@
     background-color: #242424;
   }
 
-  
+  form{
+    display: flex;
+    flex-direction: column;
+    width: 15%;
+    gap: 0.5rem;
+  }
+
+
+  .validate{
+    background-color: green;
+  }
+
+  .invalide{
+    background-color: red;
+  }
