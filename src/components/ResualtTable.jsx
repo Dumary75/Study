@@ -35,11 +35,11 @@ const handleCalculate = () => {
               <th>Investment Value</th>
               <th>Interest (Year)</th>
               <th>Total Interest</th>
-              <th>Invested Capital</th>
             </tr>
           </thead>
           <tbody>
             {investmentData.map((data) => {
+
               return (
                 <tr key={data.year}>
                   <td>{data.year}</td>
@@ -55,7 +55,7 @@ const handleCalculate = () => {
         <p className="center">No data found!</p>
       )}
 
-      <button onClick={handleCalculate}>KLick</button>
+      <button  onClick={handleCalculate}>KLick</button>
     </>
   );
 }

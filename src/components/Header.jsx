@@ -5,7 +5,7 @@ export default function Header({ investmentData, setInvestData }){
 
 const valueChanger = (setter,event) => {
 
-    let value = event.target.value;
+    let value = Number(event.target.value);
 
     const newInvestData = {...investmentData,[setter]: value};
     setInvestData(newInvestData);
