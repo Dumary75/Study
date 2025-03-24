@@ -1,20 +1,13 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { calculateInvestmentResults, formatter } from '../util/investment.js';
 
 
-export default function ResaultTable({ initialInvestmentApp, annualInvestmentApp, expectedReturnApp, durationApp }){
+export default function ResaultTable({ InvestMentData }){
 const [investmentData, setInvestmentData] = useState([])
 
 
-const exampleInvestment = {
-    initialInvestment: initialInvestmentApp,
-    annualInvestment: annualInvestmentApp,
-    expectedReturn: expectedReturnApp,
-    duration: durationApp
-};
-
 const handleCalculate = () => {
-    const results = calculateInvestmentResults(exampleInvestment);
+    const results = calculateInvestmentResults(InvestMentData);
 
     const formattedResults = results.map((data) => ({
         ...data,
@@ -28,9 +21,7 @@ const handleCalculate = () => {
   };
 
 
-  useEffect(() => {
-    console.log(investmentData)
-  },[investmentData])
+
 
 
 
@@ -49,7 +40,6 @@ const handleCalculate = () => {
           </thead>
           <tbody>
             {investmentData.map((data) => {
-              // Füge das return hinzu, um die Zeilen korrekt darzustellen
               return (
                 <tr key={data.year}>
                   <td>{data.year}</td>
