@@ -1,4 +1,6 @@
 export default function Player() {
+
+  
   return (
     <section id="player">
       <h2>Welcome unknown entity</h2>
