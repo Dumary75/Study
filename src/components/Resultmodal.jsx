@@ -1,12 +1,31 @@
+import { useState, useRef, useImperativeHandle } from "react";
+
+
+export default function Resultmodal({ timeConverted, ref }){
+    const resultRef = useRef();
+
+    useImperativeHandle(ref,() => {  
+        return {
+            open() {
+                resultRef.current.showModal(); 
+            }
+        };
+    });
 
 
 
-export default function Resultmodal(){
+const playerLosed = timeConverted <= 0;
 
 
         return (
-            <dialog>
-                <p><h2></h2></p>
+            <dialog className="result-modal" ref={resultRef}>
+                {playerLosed && <h2>You Lose!</h2>}
+                {!playerLosed && <h2>You Won!</h2>}
+                <form>
+                   <button>Close</button>
+                </form>
+
+
             </dialog>
         );
 };
