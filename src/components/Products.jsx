@@ -4,39 +4,38 @@ import Item  from './Item.jsx';
 export default function Products(){
 const[orderList,setOrderList] = useState([]);
 
-async function load() {
+ 
+useEffect(() => {
+
+  async function load() {
     try {
-        const response = await fetch('./backend/data/available-meals.json');
+        const response = await fetch('http://localhost:3000/meals');
         const data = await response.json();
         setOrderList(data);
     } catch(error){
         console.log(error);
     }
-}    
+}   
 
-useEffect(() => {
     load() 
 },[])
 
 
 
 return (
-    <div id="meals">
+  <>
       {orderList && orderList.length > 0 ? (
-        <ul>
-          {orderList.map((meal, index) => (
-            <li key={index}>
+        <ul id="meals">
+          {orderList.map((meal) => (
                 <Item 
-                    image={meal.image} 
-                    name={meal.name} 
-                    price={meal.price} 
-                    description={meal.description}/>
-            </li> 
+                key={meal.id}
+                meal={meal}
+                />
           ))}
         </ul>
       ) : (
         <p>Keine Gerichte gefunden</p>
       )}
-    </div>
+  </>
   );
 }

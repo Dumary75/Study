@@ -1,11 +1,16 @@
 
 
-export default function Cart(){
+export default function Cart({ modal, Setmodal }){
 
     return(
         <>
-            <button>Cart</button>
-        
+            {modal? 
+            <div>
+            <button>X</button>
+            <h3>TEST</h3>
+            </div>
+
+                : ''}
         </>
     )
 }
