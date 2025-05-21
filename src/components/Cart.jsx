@@ -1,6 +1,6 @@
 
 
-export default function Cart({ modal, Setmodal }){
+export default function Cart({  }){
 
     return(
         <>
