@@ -4,8 +4,8 @@ import { counterActions } from '../store/index.js';
 
 const Counter = () => {
 const dispatch = useDispatch();
-const counter = useSelector((state) => state.counter);
-const showCase = useSelector((state) => state.showCase);
+const counter = useSelector((state) => state.counter.counter);
+const showCase = useSelector((state) => state.counter.showCase);
 
 
 const decrementHandler = () => {
