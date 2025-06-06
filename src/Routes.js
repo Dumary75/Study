@@ -10,13 +10,7 @@ export default function Pathes(){
 
     return(
         <>
-            <Routes>
-                <Route path='/' element={< RootLayout />} >
-                    <Route path="Homepage" index element={<Homepage />} />
-                    <Route path='NewEvent' element={<NewEventPage />}/>
-                     <Route path=":eventName" element={<EventDetailPage />} />
-                </Route>
-            </Routes>
+
         </>
     );
 }
