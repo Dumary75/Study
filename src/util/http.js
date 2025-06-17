@@ -1,4 +1,6 @@
 
+import { useParams } from "react-router-dom" 
+
 export async function fetchEvents() {
       const response = await fetch('http://localhost:3000/events');
 
@@ -13,3 +15,8 @@ export async function fetchEvents() {
 
       return events;
     }
+
+
+
+
+
