@@ -1,10 +1,9 @@
 import { useQuery } from '@tanstack/react-query';
-import { fetchEvents } from '../../util/http.js';
+import { fetchEvents, deleteEvent } from '../../util/http.js';
 import { Link, Outlet, useParams } from 'react-router-dom';
 
 import LoadingIndicator from '../UI/LoadingIndicator.jsx';
 import ErrorBlock from '../UI/ErrorBlock.jsx';
-import EventItem from './EventItem.jsx';
 import Header from '../Header.jsx';
 
 
@@ -23,7 +22,7 @@ export default function EventDetails() {
     let content;
   
     if (isPending) {
-      content = <LoadingIndicator />;
+      content = <LoadingIndicator/>;
     }
   
     if (isError) {
@@ -41,7 +40,7 @@ export default function EventDetails() {
         <header>
           <h1>{event.title}</h1>
           <nav>
-            <button>Delete</button>
+            <button onClick={() => deleteEvent({id})}>Delete</button>
             <Link to="edit">Edit</Link>
           </nav>
         </header>

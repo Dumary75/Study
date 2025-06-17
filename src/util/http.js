@@ -1,6 +1,4 @@
 
-import { useParams } from "react-router-dom" 
-
 export async function fetchEvents() {
       const response = await fetch('http://localhost:3000/events');
 
@@ -18,5 +16,13 @@ export async function fetchEvents() {
 
 
 
+export async function deleteEvent({ id }) {
+  const response = await fetch(`http://localhost:3000/events/${id}`, {
+    method: 'DELETE'
+  });
 
+  alert('EVENT DELETED!');
+
+  return response.json();
+}
 
