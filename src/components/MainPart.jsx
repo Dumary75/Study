@@ -1,18 +1,23 @@
 
-import UserDetail from "./UserDetail"
-import UserForm from "./UserForm"
+import { editUser } from './UserContext';
 import CreateButton from "./Funktions/CreateButton"
-import DeleteButton from "./Funktions/DeleteButton"
+import { Link } from 'react-router-dom';
+import UserForm from './UserForm';
 
 export default function MainPart(){
+    const { state } = editUser();
 
     return(
 
         <>
-            UserList .map with UserDetail routhe inside
+            {state.length >0 ? state.map((user) => <ul className='mainUserList'>
+                <li key={user.id} className='userItem'>
+                    <Link key={user.name} to={`/details/${user.name}`}>{user.name}</Link>
+                </li>
+            </ul>) : 'No users found!'}
 
+        <UserForm />
         <CreateButton />
-        <DeleteButton />
         </>
     )
 }

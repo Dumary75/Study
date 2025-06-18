@@ -18,7 +18,7 @@ export default function UserList(){
         <Routes>
             <Route  element={<Header />}>
                 <Route path="/" index element={<MainPart />} />
-                <Route path="/details" element={<UserDetail />} />
+                <Route path="/details/:name" element={<UserDetail />} />
             </Route>
         </Routes>
     </BrowserRouter>

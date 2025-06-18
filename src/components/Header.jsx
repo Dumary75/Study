@@ -8,7 +8,7 @@ export default function Header({ userList }) {
     return (
         <>
         <nav className="Navbar">
-            <Link to={'/details'}>Mainpart</Link>
+            <Link to={'/'}>Mainpart</Link>
             <input type="search" />
         </nav>
 
