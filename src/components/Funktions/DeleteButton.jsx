@@ -8,9 +8,7 @@ export default function DeleteButton({ user }){
 const deleteHandler = () => {
 
 const DeleteData = state.filter(userItem => userItem.name !== user.name)
-const Newdata = Object.fromEntries(DeleteData.entries());
-console.log(Newdata);
-dispatch({ type: "delete", payload: Newdata });
+dispatch({ type: "delete", payload: DeleteData });
 
 }
     

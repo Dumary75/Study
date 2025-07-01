@@ -11,7 +11,7 @@ function userReducer(state, action) {
       return [...state, action.payload]; 
 
     case "delete":
-      return [action.payload]; 
+      return action.payload; 
 
     default:
       return state;
