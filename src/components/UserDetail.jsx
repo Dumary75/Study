@@ -14,12 +14,16 @@ const { state } = editUser();
 
 const treffer = state.find(user => user.name === name);
 
+function aufklappen() {
+  setAufmachen(prevState => !prevState);
+}
+
     return(
 
         <>
                 {aufmachen? 
                 <>
-                 <UserEdit user={treffer} />
+                 <UserEdit user={treffer} aufmachen={aufmachen} aufklappen={aufklappen}/>
                 </> : <>
 
                 <h2>Deine Daten</h2>
@@ -29,7 +33,7 @@ const treffer = state.find(user => user.name === name);
                     <li>Email: {treffer.email}</li>
                 </ul>
 
-                <EditButton setAufmachen={setAufmachen}/>
+                <EditButton aufklappen={aufklappen}/>
                 <DeleteButton user={treffer}/> </>
                 }
         </>

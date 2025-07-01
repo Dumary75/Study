@@ -3,12 +3,8 @@
 
 
 
-export default function EditButton({ setAufmachen }){
+export default function EditButton({ aufklappen }){
 
-
-function aufklappen() {
-  setAufmachen(prevState => !prevState);
-}
 
     return(
 
