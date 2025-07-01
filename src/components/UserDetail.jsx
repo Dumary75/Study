@@ -1,11 +1,14 @@
 
+import { useState } from "react";
 import DeleteButton from "./Funktions/DeleteButton";
 import EditButton from "./Funktions/EditButton";
 import { useParams } from "react-router-dom"
 import { editUser } from './UserContext';
+import UserEdit from './UserEdit';
 
 
 export default function UserDetail(){
+const [aufmachen,setAufmachen] = useState(false);    
 const {name} = useParams();
 const { state } = editUser();
 
@@ -14,6 +17,10 @@ const treffer = state.find(user => user.name === name);
     return(
 
         <>
+                {aufmachen? 
+                <>
+                 <UserEdit user={treffer} />
+                </> : <>
 
                 <h2>Deine Daten</h2>
                 <ul className="mainUserList">
@@ -21,9 +28,10 @@ const treffer = state.find(user => user.name === name);
                     <li>Rolle: {treffer.role}</li>
                     <li>Email: {treffer.email}</li>
                 </ul>
-                
-                <EditButton user={treffer}/>
-                <DeleteButton user={treffer}/>
+
+                <EditButton setAufmachen={setAufmachen}/>
+                <DeleteButton user={treffer}/> </>
+                }
         </>
     );
 }

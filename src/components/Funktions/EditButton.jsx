@@ -2,13 +2,18 @@
 
 
 
-export default function EditButton(){
 
+export default function EditButton({ setAufmachen }){
+
+
+function aufklappen() {
+  setAufmachen(prevState => !prevState);
+}
 
     return(
 
         <>
-            <button>Edit</button>
+            <button onClick={aufklappen}>Edit</button> 
         </>
     );
 }
