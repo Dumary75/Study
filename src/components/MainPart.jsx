@@ -14,7 +14,7 @@ export default function MainPart(){
                 <li key={user.id} className='userItem'>
                     <Link key={user.name} to={`/details/${user.name}`}>{user.name}</Link>
                 </li>
-            </ul>) : 'No users found!'}
+            </ul>) : 'No users found!'} <br />
 
         <UserForm />
         <CreateButton />

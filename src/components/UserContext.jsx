@@ -3,13 +3,15 @@ import { createContext, useReducer, useContext } from "react";
 
 const UserContext = createContext();
 
-const initialState = [{name: 'TEST'},{name: 'ZWEITER'}];
+const initialState = [];
 
 function userReducer(state, action) {
   switch (action.type) {
     case "edit":
-        console.log(initialState);
       return [...state, action.payload]; 
+
+    case "delete":
+      return [action.payload]; 
 
     default:
       return state;

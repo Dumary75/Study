@@ -18,10 +18,12 @@ const treffer = state.find(user => user.name === name);
                 <h2>Deine Daten</h2>
                 <ul className="mainUserList">
                     <li>Name: {treffer.name}</li>
+                    <li>Rolle: {treffer.role}</li>
+                    <li>Email: {treffer.email}</li>
                 </ul>
                 
-                <EditButton />
-                <DeleteButton />
+                <EditButton user={treffer}/>
+                <DeleteButton user={treffer}/>
         </>
     );
 }

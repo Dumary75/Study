@@ -1,15 +1,26 @@
 
+import { Link } from 'react-router-dom';
+import { editUser } from '../UserContext';
 
+export default function DeleteButton({ user }){
+ const { state, dispatch } = editUser();
 
-export default function DeleteButton(){
+const deleteHandler = () => {
 
+const DeleteData = state.filter(userItem => userItem.name !== user.name)
+const Newdata = Object.fromEntries(DeleteData.entries());
+console.log(Newdata);
+dispatch({ type: "delete", payload: Newdata });
+
+}
     
 
 
-    return(
-        
+return(
+
+
         <>
-            <button>Delete</button>
+            <Link onClick={deleteHandler} to='/'><button>Delete</button></Link>  
         </>
     );
 }
