@@ -1,53 +1,54 @@
-
 import { editUser } from './UserContext';
-import CreateButton from "./Funktions/CreateButton"
+import CreateButton from "./Funktions/CreateButton";
 import { Link } from 'react-router-dom';
 import UserForm from './UserForm';
-import { useState, useRef } from 'react';
+import { useState, useRef, useMemo } from 'react';
 
-
-
-
-export default function MainPart(){
+export default function MainPart() {
     const beispielRef = useRef(null);
     const { state } = editUser();
-    const[seArch,SetSearch] = useState([]);
+    const [suchValue, setSuchValue] = useState('');
 
+    const filteredUsers = useMemo(() => {
+        if (!suchValue) return [];
+        return state.filter(userItem => userItem.name === suchValue);
+    }, [state, suchValue]);
 
-function search(){
-    let suchValue = beispielRef.current.value.trim();
-    const filteredUsers = state.filter(userItem => userItem.name === suchValue);
-    SetSearch(filteredUsers);
-}
+    function search() {
+        const value = beispielRef.current.value.trim();
+        if (value === '') {
+            alert("You're looking for nothing...");
+        } else {
+            setSuchValue(value);
+        }
+    }
 
-function all(){
- SetSearch([]);
-}
+    function all() {
+        setSuchValue('');
+    }
 
-
-
-
-    return(
-
+    return (
         <>
-         <input type="search" ref={beispielRef}/>
-         <button onClick={search}>Search</button>
-         <button onClick={all}>All</button> <br />
+            <input type="search" ref={beispielRef} />
+            <button onClick={search}>Search</button>
+            <button onClick={all}>All</button>
+            <br />
 
-            {state.length >0 
-            ? seArch.length <1 ? state.map((user) => <ul className='mainUserList' key={user.id}>
-                <li className='userItem'>
-                    <Link  to={`/details/${user.name}`}>{user.name}</Link>
-                </li>
-            </ul>) : seArch.map((user) => <ul className='mainUserList' key={user.id}>
-                <li className='userItem'>
-                    <Link  to={`/details/${user.name}`}>{user.name}</Link>
-                </li>
-            </ul>)
-            : 'No users found!'} <br />
+            {state.length > 0 ? (
+                (suchValue ? filteredUsers : state).map((user) => (
+                    <ul className='mainUserList' key={user.id}>
+                        <li className='userItem'>
+                            <Link to={`/details/${user.name}`}>{user.name}</Link>
+                        </li>
+                    </ul>
+                ))
+            ) : (
+                'No users found!'
+            )}
+            <br />
 
-        <UserForm />
-        <CreateButton />
+            <UserForm />
+            <CreateButton />
         </>
-    )
+    );
 }

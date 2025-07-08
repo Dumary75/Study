@@ -6,11 +6,13 @@ export default function DeleteButton({ user }){
  const { state, dispatch } = editUser();
 
 const deleteHandler = () => {
-
-const DeleteData = state.filter(userItem => userItem.name !== user.name)
-dispatch({ type: "delete", payload: DeleteData });
-
-}
+ 
+  if (confirm("are you sure?") == true) {
+    alert(`User: ${user.name} successfully deleted!`)
+    const DeleteData = state.filter(userItem => userItem.name !== user.name)
+    dispatch({ type: "delete", payload: DeleteData });
+  }; 
+};
     
 
 
