@@ -1,4 +1,6 @@
-if (test) {
-    test = 43;
-}
-
+var array;
+array = [
+    'test',
+    'aaa'
+];
+console.log(array);
