@@ -1,10 +1,8 @@
 
 
-let array: string[];
 
-array = [
-    'test',
-    'aaa'
-];
+function test<T>(param: T, param2: T){
+    console.log('xy')
+};
 
-console.log(array);
+test(23,'xy');
