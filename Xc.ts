@@ -5,6 +5,7 @@
 
     name: string;
     age: number;
+    public xc = 23;
 
     constructor(name: string, age:number){
         this.name = name;
@@ -31,3 +32,4 @@
     name: 'test',
     age: 23
  }
+
