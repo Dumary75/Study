@@ -1,35 +1,18 @@
 
 
-
- class Person{
-
-    name: string;
-    age: number;
-    public xc = 23;
-
-    constructor(name: string, age:number){
-        this.name = name;
-        this.age = age;
-    }
-
-    greeting(): void {
-        console.log(`Hello from ${this.name}`)
-    }
+ type TEST = {
+   name: 'blabla' ;
+   permission:  {
+      test2: 'xy';
+      nb: 23; 
+   }[];
  };
 
- let pI = new Person('THomy', 23);
+ type perObj = TEST['permission'];
 
- pI.greeting();
+ const xy: perObj = [{
+    test2: 'xy',
+    nb: 23
+ }]
 
- // Interface test
-
- interface example{
-    name: string,
-    age: number
- };
-
- const p3: example = {
-    name: 'test',
-    age: 23
- }
-
+ console.log(xy);
