@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mein Portfolio</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="./code.js" defer></script>
+</head>
+<body>
+  <!-- Navbar -->
+  <nav>
+    <div class="nav-container">
+      <div class="logo">MeinLogo</div>
+      <div class="hamburger" id="hamburger">
+        <span></span><span></span><span></span>
+      </div>
+      <div class="nav-links" id="nav-links">
+        <a href="#hero">Home</a>
+        <a href="#projekte">Projekte</a>
+        <a href="#skills">Skills</a>
+        <a href="#zertifikate">Zertifikate</a>
+        <a href="#lebenslauf">Lebenslauf</a>
+        <a href="#kontakt">Kontakt</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero -->
+  <section id="hero" class="show">
+    <img src="https://via.placeholder.com/180" alt="Profilbild">
+    <h1>Willkommen!</h1>
+    <p>Das ist mein Portfolio – elegant, clean und modern.</p>
+    <a href="#projekte" class="cta-btn">Zu meinen Projekten</a>
+  </section>
+
+  <!-- Projekte -->
+  <section id="projekte">
+    <h2>Projekte</h2>
+    <div class="wrapper">
+      <div class="projekt">
+        <iframe src="https://example.com"></iframe>
+        <h3>Projekt 1</h3>
+        <p>Beschreibung zu Projekt 1.</p>
+        <a href="#">Demo</a>
+        <a href="#">Code</a>
+      </div>
+      <div class="projekt">
+        <iframe src="https://example.com"></iframe>
+        <h3>Projekt 2</h3>
+        <p>Beschreibung zu Projekt 2.</p>
+        <a href="#">Demo</a>
+        <a href="#">Code</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Skills -->
+  <section id="skills">
+    <h2>Skills</h2>
+    <div class="grid">
+      <div class="skill">
+        <i>💻</i>
+        JavaScript
+        <div class="bar"><div class="bar-fill" style="width:80%"></div></div>
+      </div>
+      <div class="skill">
+        <i>⚛️</i>
+        React
+        <div class="bar"><div class="bar-fill" style="width:70%"></div></div>
+      </div>
+      <div class="skill">
+        <i>🎨</i>
+        CSS
+        <div class="bar"><div class="bar-fill" style="width:90%"></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Zertifikate -->
+  <section id="zertifikate">
+    <h2>Zertifikate</h2>
+    <div class="list">
+      <div class="cert">
+        <strong>Frontend Zertifikat</strong>
+        <a href="#">Ansehen</a>
+      </div>
+      <div class="cert">
+        <strong>JavaScript Kurs</strong>
+        <a href="#">Ansehen</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Lebenslauf -->
+  <section id="lebenslauf">
+    <h2>Lebenslauf</h2>
+    <div class="timeline">
+      <div class="entry">
+        <h4>2023 – Heute</h4>
+        <p>Webentwickler bei XYZ</p>
+      </div>
+      <div class="entry">
+        <h4>2021 – 2023</h4>
+        <p>Frontend Ausbildung</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Kontakt -->
+  <section id="kontakt">
+    <h2>Kontakt</h2>
+    <form>
+      <input type="text" placeholder="Name" required>
+      <input type="email" placeholder="E-Mail" required>
+      <textarea rows="5" placeholder="Nachricht"></textarea>
+      <button type="submit">Senden</button>
+    </form>
+  </section>
+
+  <script src="script.js"></script>
+</body>
+</html>
