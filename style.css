@@ -41,7 +41,11 @@ nav{position:fixed;top:0;left:0;width:100%;background:#2c2c2c;padding:15px 20px;
 }
 #hero img{width:180px;height:180px;border-radius:50%;border:5px solid #64b5f6;margin-bottom:20px;animation:float 3s ease-in-out infinite alternate;box-shadow:0 8px 20px rgba(0,0,0,0.6);}
 #hero h1{font-size:2.8rem;margin-bottom:10px;}
-#hero p{max-width:600px;font-size:1.2rem;color:#e0e0e0;}
+#hero p{
+  max-width:600px;
+  font-size:1.2rem;
+  color:#e0e0e0;
+}
 @keyframes float{from{transform:translateY(0);}to{transform:translateY(-15px);}}
 
 #hero .cta-btn {
@@ -87,9 +91,16 @@ nav{position:fixed;top:0;left:0;width:100%;background:#2c2c2c;padding:15px 20px;
   border-radius: 10px;
 }
 
+.button-group {
+  display: flex;
+  justify-content: center;
+  gap: 10px; /* Abstand zwischen Buttons */
+  margin-top: 10px;
+}
+
 
 .projekt h3{margin-bottom:10px;color:#bbdefb;}
-.projekt p{color:#b0bec5;}
+.projekt p{color:#b0bec5; margin-bottom: 1rem;}
 .projekt a{display:inline-block;margin:5px;padding:8px 14px;background:#1565c0;color:#fff;text-decoration:none;border-radius:6px;font-size:.9rem;transition:.3s;}
 
 /* Skills */
@@ -159,7 +170,6 @@ nav{position:fixed;top:0;left:0;width:100%;background:#2c2c2c;padding:15px 20px;
 
   #hero p{
     max-width: 90%;
-    
   }
 
 }
@@ -235,5 +245,5 @@ nav{position:fixed;top:0;left:0;width:100%;background:#2c2c2c;padding:15px 20px;
   #skills .grid {
     grid-template-columns: repeat(4, 1fr);
   }
-  
+
 }
