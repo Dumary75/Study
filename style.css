@@ -39,7 +39,20 @@ nav{position:fixed;top:0;left:0;width:100%;background:#2c2c2c;padding:15px 20px;
   color:#fff;
   margin-top: 8rem;
 }
-#hero img{width:180px;height:180px;border-radius:50%;border:5px solid #64b5f6;margin-bottom:20px;animation:float 3s ease-in-out infinite alternate;box-shadow:0 8px 20px rgba(0,0,0,0.6);}
+
+
+#hero img{
+  width:180px;
+  height:180px;
+  margin-bottom:20px;
+  animation:float 3s ease-in-out infinite alternate;
+  border-radius:50%;
+  box-shadow:0 8px 20px rgba(0,0,0,0.6);
+  border: 5px solid #00bbff; /* hellgrau */
+  background-color:#0a4f87
+}
+
+
 #hero h1{font-size:2.8rem;margin-bottom:10px;}
 #hero p{
   max-width:600px;
