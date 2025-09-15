@@ -258,13 +258,15 @@
             <img src="./skill_icons/LinkedIn.png" alt="linkedin symbol" class="socialsImage"> 
         </a>
       </div>
+      
       <h2>Oder</h2>
-        <form>
-          <input type="text" placeholder="Name" required>
-          <input type="email" placeholder="E-Mail" required>
-          <textarea rows="5" placeholder="Nachricht"></textarea>
-          <button type="submit">Senden</button>
-        </form>
+
+      <form action="https://formspree.io/f/mqadobkg" method="POST">
+        <input type="text" name="name" placeholder="Name" required>
+        <input type="email" name="email" placeholder="E-Mail" required>
+        <textarea name="message" rows="5" placeholder="Nachricht" required></textarea>
+        <button type="submit">Senden</button>
+      </form>
   </section>
 </body>
 
