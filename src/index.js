@@ -1,5 +1,4 @@
-const { app, BrowserWindow, Menu } = require('electron');
-const { type } = require('node:os');
+const { app, BrowserWindow, Menu, MenuItem } = require('electron');
 const path = require('node:path');
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
@@ -20,26 +19,38 @@ const createWindow = () => {
   // and load the index.html of the app.
   mainWindow.loadFile(path.join(__dirname, 'index.html'));
 
-  const template = [
-    {
-      label: 'Menüpunkt',
-      submenu: [
-          {label: 'info1',
-            click: function(){
-              console.log('TEST');
-            }
-          },
-          {type: 'separator'},
-          {label: 'Ende',
-            click(){
-              app.quit();
-            }
-          }
-      ]
-    }
-  ];
-  const menu = Menu.buildFromTemplate(template);
-  Menu.setApplicationMenu(menu);
+ const kMenu = new Menu();
+ kMenu.append(new MenuItem({
+  label: 'Test'
+ }));
+
+ mainWindow.webContents.on('context-menu', function(e, params){
+  kMenu.popup(mainWindow, params.x, params.y);
+ });
+
+ const template = [{
+    label: 'Menü',
+    submenu: [
+      {
+        label: 'Punkt 1',
+        click(){
+          console.log('HA')
+        }
+      },
+      {
+        type: 'separator'
+      },
+      {
+        label: 'Ende',
+        click(){
+          app.quit();
+        }
+      }
+    ]
+  }];
+ const menu = Menu.buildFromTemplate(template);
+ Menu.setApplicationMenu(menu);
+
 
 };
 
