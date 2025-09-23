@@ -1,5 +1,7 @@
-const { app, BrowserWindow, Menu, MenuItem } = require('electron');
+const { app, BrowserWindow, Menu, MenuItem} = require('electron');
 const path = require('node:path');
+
+
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
 if (require('electron-squirrel-startup')) {
@@ -9,47 +11,36 @@ if (require('electron-squirrel-startup')) {
 const createWindow = () => {
   // Create the browser window.
   const mainWindow = new BrowserWindow({
-    width: 800,
-    height: 600,
+    width: 1280,           // Feste Breite
+    height: 720,           // Feste Höhe
+    minWidth: 1280,        // Minimale Breite (optional, falls du doch minimal skalieren willst)
+    minHeight: 720,        // Minimale Höhe
+    resizable: false,      // 👈 WICHTIG: Deaktiviert manuelles Größenändern!
+    maximizable: false,    // 👈 Optional: Deaktiviert "Maximieren"-Button
+    fullscreenable: false, // 👈 Optional: Deaktiviert Vollbildmodus
+    title: "Netflix Clone Desktop", // 👈 Titel in der Fensterleiste
     webPreferences: {
-      preload: path.join(__dirname, 'preload.js'),
-    },
+      preload: path.join(__dirname, 'preload.js'), // 👈 WICHTIG!
+    }
   });
 
   // and load the index.html of the app.
-  mainWindow.loadFile(path.join(__dirname, 'index.html'));
+  mainWindow.loadURL('https://couchingtv.vercel.app/');
 
- const kMenu = new Menu();
- kMenu.append(new MenuItem({
-  label: 'Test'
- }));
+  const menu = new Menu();
 
- mainWindow.webContents.on('context-menu', function(e, params){
-  kMenu.popup(mainWindow, params.x, params.y);
- });
-
- const template = [{
-    label: 'Menü',
-    submenu: [
-      {
-        label: 'Punkt 1',
-        click(){
-          console.log('HA')
+  // "Ansicht"-Menü
+  const viewMenu = new MenuItem({
+        label: 'Entwicklertools',
+        click: () => {
+          mainWindow.webContents.toggleDevTools();
         }
-      },
-      {
-        type: 'separator'
-      },
-      {
-        label: 'Ende',
-        click(){
-          app.quit();
-        }
-      }
-    ]
-  }];
- const menu = Menu.buildFromTemplate(template);
- Menu.setApplicationMenu(menu);
+  });
+
+  menu.append(viewMenu);
+
+  // Setze das Menü für das Fenster
+  Menu.setApplicationMenu(menu);
 
 
 };
