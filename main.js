@@ -1,19 +1,10 @@
 
 const http = require('http');
-const fs = require('fs');
 
-function writter(req, res){
+const express = require('express');
 
-    const stream = fs.createWriteStream('output.txt');
+const start = express();
 
-    stream.write('Hallo');
-
-    stream.end();
-
-}
-
-const server = http.createServer(writter);
+const server = http.createServer(start);
 
 server.listen(3000);
-
-
