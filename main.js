@@ -1,19 +1,14 @@
-
-const http = require('http');
-
 const express = require('express');
 
-const start = express();
+const adminroutes = require('./routes/admin');
 
-start.use((req, res, next) => {
- console.log('Hallo');
- next();
-})
+const server = express();
 
-start.use('/', (req, res, next) => {
- res.send('<h1>Hallo</h1>')
-})
+server.use(adminroutes);
 
-const server = http.createServer(start);
+server.use((req,res, next) => {
+    res.status(404).send('<h1>Page not Found Boy!</h1>');
+});
+
 
 server.listen(3000);
