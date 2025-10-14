@@ -2,14 +2,12 @@ const express = require('express');
 
 const router = express.Router();
 
-router.get('/',(req, res, next) => {
- res.send('<h1>Hallo MainPage</h1>')
- next();
-})
+let products = [];
 
-router.use('/produkt', (req, res, next) => {
- res.send('<h1>Hallo Produkt</h1>')
+router.use((req, res, next) => {
+ res.send('<h1>Hallo AdminPage</h1>')
 })
 
 
-module.exports = router;
+exports.routes = router;
+exports.products = products;
