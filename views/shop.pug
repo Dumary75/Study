@@ -1,0 +1,18 @@
+doctype html
+html(lang="en")
+    head
+        meta(charset="UTF-8")
+        meta(name="viewport", content="width=device-width, initial-scale=1.0")
+        title #{titleProb}
+        link(rel="stylesheet", href="/nav.css")
+    body 
+      header.main-header 
+        ul.nav-list 
+          li.nav-list_li
+            a(href="/").anker Shop 
+          li.nav-list_li
+            a(href="/admin").anker Admin
+
+      main 
+       each produkt in products
+         p #{produkt.title}

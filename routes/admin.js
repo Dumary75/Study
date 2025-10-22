@@ -1,13 +1,15 @@
 const express = require('express');
+const path = require('path');
 
 const router = express.Router();
 
-let products = [];
+let products = [{title: 'erster'}];
 
-router.use((req, res, next) => {
- res.send('<h1>Hallo AdminPage</h1>')
-})
-
+// GET-Request auf /admin
+router.get('/', (req, res) => {
+  // '..' geht einen Ordner hoch, da __dirname /routes ist
+  res.sendFile(path.join(__dirname, '..', 'views', 'addProdukt.html'));
+});
 
 exports.routes = router;
 exports.products = products;

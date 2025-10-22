@@ -1,0 +1,35 @@
+*{
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body{
+    background-color: rgb(50, 50, 50)
+}
+
+.main-header{
+    width: 100%;
+    height: 3rem;
+    border-bottom: 0.1rem solid #000;
+    background-color: #5b5b5b;
+    padding: 0.5rem 3rem;
+}
+
+.nav-list{
+    display: flex;
+    gap: 3rem;
+}
+
+.nav-list_li{
+    list-style-type: none;
+}
+
+.anker{
+  text-decoration: none;
+  color: inherit; /* behält die Textfarbe vom Eltern-Element */
+}
+
+main{
+    margin: 5rem;
+}
