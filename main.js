@@ -7,7 +7,7 @@ const shopData = require('./routes/shop');
 const server = express();
 
 server.use(express.static('public'));
-
+server.use(express.json());
 
 server.set('view engine', 'pug');
 
@@ -22,7 +22,6 @@ server.use((req,res, next) => {
 db
 .sync()
 .then((resolved) => {
-    console.log(resolved);
     server.listen(3000);
 })
 .catch((err) => {
