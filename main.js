@@ -1,4 +1,5 @@
 const express = require('express');
+const db = require('./util/database');
 
 const adminData = require('./routes/admin');
 const shopData = require('./routes/shop');
@@ -18,4 +19,13 @@ server.use((req,res, next) => {
 });
 
 
-server.listen(3000);
+db
+.sync()
+.then((resolved) => {
+    console.log(resolved);
+    server.listen(3000);
+})
+.catch((err) => {
+    console.log(err);
+})
+
