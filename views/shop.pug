@@ -16,9 +16,12 @@ html(lang="en")
       main 
        each produkt in products
          p #{produkt.title}
-         p #{produkt.price}
+         p #{produkt.price}$
          p #{produkt.description}
          p #{produkt.id}
          a(href=`/admin/edit-product/${produkt.id}`) Bearbeiten
+         button(onclick=`deleteProduct(${produkt.id})`) Löschen
          br
          br
+
+    script(src="/deleteScript.js")

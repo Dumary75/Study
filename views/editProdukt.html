@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <title>Product Edit</title>
+  <link rel="stylesheet" href="/nav.css">
+</head>
+<body>
+    <h1>Produkt bearbeiten</h1>
+    
+  <form id="editForm">
+    <input type="text" id="title">
+    <input type="number" id="price">
+    <textarea id="description"></textarea>
+    <input type="text" id="imageURL">
+    <button type="submit">Speichern</button>
+  </form>
+</body>
+
+<script>
+  const productId = window.location.pathname.split('/').pop();
+
+  async function loadProduct() {
+    const res = await fetch(`/admin/api/product/${productId}`);
+    const product = await res.json();
+
+    // aktuelle Werte in die Inputs setzen
+    document.getElementById('title').value = product.title;
+    document.getElementById('price').value = product.price;
+    document.getElementById('description').value = product.description;
+    document.getElementById('imageURL').value = product.imageURL;
+  }
+
+  loadProduct();
+
+  const form = document.getElementById('editForm');
+  form.addEventListener('submit', async (e) => {
+
+    e.preventDefault();
+    const data = {
+      title: document.getElementById('title').value,
+      price: parseFloat(document.getElementById('price').value),
+      description: document.getElementById('description').value,
+      imageURL: document.getElementById('imageURL').value
+    };
+
+    try{
+    await fetch(`/admin/api/product/${productId}`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data)
+    });
+
+    alert('Produkt gespeichert!');
+    window.location.href = '/';
+
+
+    }catch{(err) => console.log(err)}
+    
+  });
+</script>
+
+
+
+</body>
+</html>
