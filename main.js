@@ -1,5 +1,7 @@
 const express = require('express');
 const db = require('./util/database');
+const User = require('./views/models/user');
+const Product = require('./views/models/product');
 
 const adminData = require('./routes/admin');
 const shopData = require('./routes/shop');
@@ -19,9 +21,22 @@ server.use((req,res, next) => {
 });
 
 
+Product.belongsTo(User, { constraints: true, onDelete: 'CASCADE' });
+User.hasMany(Product);
+
+
 db
 .sync()
-.then((resolved) => {
+.then(result => {
+ return User.findByPk(1);
+})
+.then(user => {
+    if(!user){
+        return User.create({ name: 'sam', email: 'test@web.de' })
+    }
+    return user;
+})
+.then((user) => {
     server.listen(3000);
 })
 .catch((err) => {
