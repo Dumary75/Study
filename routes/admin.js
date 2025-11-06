@@ -5,7 +5,7 @@ const Product = require('../views/models/product'); // falls benötigt
 const router = express.Router();
 
 // GET /admin -> Formular anzeigen
-router.get('/', (req, res) => {
+router.get('/addProduct', (req, res) => {
   res.sendFile(path.join(__dirname, '..', 'views', 'addProdukt.html'));
 });
 
@@ -13,7 +13,7 @@ router.get('/', (req, res) => {
 router.post('/add-product', async (req, res) => {
   try {
     const { title, price, description, imageURL } = req.body;
-    await Product.create({ title, price, description, imageURL });
+    await req.user.createProduct({ title, price, description, imageURL });
     res.status(200).json({ message: 'Produkt gespeichert' });
   } catch (err) {
     console.log(err);
