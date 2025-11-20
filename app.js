@@ -9,6 +9,14 @@ const User = require('./models/user');
 
 const app = express();
 
+const session = require('express-session');
+const MongoDBseason = require('connect-mongodb-session')(session);
+
+const store = new MongoDBseason({
+  uri: 'mongodb+srv://firstOne:9lPVJUcMUK9yrURY@schwarzmuller.yuepgkj.mongodb.net/?appName=Schwarzmuller',
+  colletion: 'sessions'
+})
+
 app.set('view engine', 'ejs');
 app.set('views', 'views');
 
@@ -18,6 +26,7 @@ const authRoutes = require('./routes/auth');
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(session({ secret: 'mySecret', resave: false,  saveUninitialized: false, store: store}));
 
 app.use((req, res, next) => {
   User.findById('5bab316ce0a7c75f783cb8a8')
