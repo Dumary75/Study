@@ -23,14 +23,31 @@ exports.postLogin = (req, res, next) => {
       req.session.user = user;
       req.session.save(err => {
         console.log(err);
-        res.redirect('/');
+        res.redirect('/login');
       });
     })
     .catch(err => console.log(err));
 };
 
 exports.postSignup = (req, res, next) => {
-  
+  const email = req.body.email;
+  const password = req.body.password;
+  const confirmPassword = req.body.confirmPassword;
+  User.findOne({ email: email })
+    .then(userDoc => {
+      if( userDoc ){
+      console.log('User already exist!'),
+      res.redirect('/') 
+      }
+
+      const user = new User({
+        email: email,
+        password: password
+      })
+      return user.save();
+    })
+    .then(result => res.redirect('/login'))
+    .catch(err => console.log('ERROR: ' + err));
 };
 
 exports.postLogout = (req, res, next) => {
