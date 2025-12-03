@@ -56,7 +56,7 @@ app.use(errorController.get404);
 
 mongoose
   .connect(MONGODB_URI)
-  .then(result => {
+  .then(() => {
     app.listen(3000);
   })
   .catch(err => {
