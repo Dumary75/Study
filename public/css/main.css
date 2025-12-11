@@ -8,7 +8,7 @@ body {
   padding: 0;
   margin: 0;
   font-family: 'Open Sans', sans-serif;
-  background-color: rgb(66, 66, 66);
+  background-color: rgb(64, 64, 64);
   color: #FFF;
 }
 
@@ -157,7 +157,6 @@ form {
 
 .card {
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.26);
-  background-color: #004940;
 }
 
 .card__header,
