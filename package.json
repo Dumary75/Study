@@ -8,19 +8,28 @@
     "start": "nodemon app.js",
     "start-server": "node app.js"
   },
-  "author": "MTr",
+  "author": "MT",
   "license": "ISC",
   "devDependencies": {
     "nodemon": "^3.1.11"
   },
   "dependencies": {
+    "bcryptjs": "^2.4.3",
     "body-parser": "^1.18.3",
+    "connect-flash": "^0.1.1",
+    "connect-mongodb-session": "^2.0.3",
+    "csurf": "^1.2.2",
     "ejs": "^3.1.10",
     "express": "^4.22.1",
     "express-handlebars": "^8.0.4",
+    "express-session": "^1.15.6",
+    "express-validator": "^7.3.1",
+    "mogoose": "^0.0.1-security",
     "mongodb": "^3.1.6",
     "mongoose": "^9.0.1",
     "mysql2": "^3.15.3",
+    "nodemailer": "^7.0.11",
+    "nodemailer-sendgrid-transport": "^0.2.0",
     "pug": "^3.0.3",
     "sequelize": "^6.37.7"
   }
