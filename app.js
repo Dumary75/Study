@@ -60,7 +60,7 @@ app.use((error, req, res, next) => {
 
 mongoose
   .connect(
-    'mongodb+srv://firstOne:9lPVJUcMUK9yrURY@schwarzmuller.yuepgkj.mongodb.net/?appName=Schwarzmuller'
+    ''
   )
   .then(result => {
     const server = app.listen(8080);
