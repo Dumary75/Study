@@ -11,7 +11,7 @@ module.exports = buildSchema(`
 
 
     type Query {
-     getUser(name: String!, password: String!): User
+     getUser(name: String!, password: String!): Ulser
 
 
     }
