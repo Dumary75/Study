@@ -6,12 +6,8 @@ namespace MyApp
         static void Main(string[] args)
         {
 
-            int birthYear = 2026;
+            Car mycar = new Car();
 
-            Console.WriteLine("Trägst du Alter hier ein!");
-            string age = Console.ReadLine();
-
-            Console.WriteLine(birthYear - int.Parse(age));
         }
     }
 } 
