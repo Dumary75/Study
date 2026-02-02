@@ -6,7 +6,7 @@ namespace WetterApp;
 public partial class MainWindow : Window
 {
 
-        public readonly string  apiKey= "b5342b70c4e9dd024baafd6164f9f1ca";
+
         private readonly string apiRequest = "https://api.openweathermap.org/data/2.5/weather";
 
     public MainWindow()
