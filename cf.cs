@@ -1,15 +1,20 @@
+using TEST;
 
-using System.CodeDom;
 
-public class Programm
+public class cda
 {
     
 
-    public static Method(){
-
-
-
+    public void Tasa(string bla)
+    {
+        System.Console.WriteLine($"Es geht: {bla}");
+        System.Console.ReadKey();
     }
 
-    
+    public cda()
+    {
+        Tasa("sadsw");
+    }
+
+
 }
