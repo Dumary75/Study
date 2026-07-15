@@ -1,23 +1,18 @@
+
 var builder = WebApplication.CreateBuilder(args);
 var app = builder.Build();
 
+// Hier definierst du deine Routen
+app.MapGet("/", async (HttpContext context) => {
+    await context.Response.WriteAsync("Startseite");
+});
 
-app.Run( async (HttpContext context) => 
-{
+app.MapGet("/andere", async (HttpContext context) => {
+    await context.Response.WriteAsync("Andere Seite");
+});
 
-    if (context.Request.Path.StartsWithSegments("/")) 
-{ 
-
-       await context.Response.WriteAsync($"Was geeeeht? Hier, methode: {context.Request.Method}");
-} else if (context.Request.Path.StartsWithSegments("/andere"))
-    {
-        await context.Response.WriteAsync($"Andere, ja? hier Path: {context.Request.Path}");
-    };
-
-
-        
-        });
-
-app.Run();
+// Erst ganz am Ende starten
+app.Run(); 
 
 
+public class Employee { "name:" ""}
