@@ -150,7 +150,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "/usr/lib/dotnet/sdk/10.0.109/PortableRuntimeIdentifierGraph.json",
+        "runtimeIdentifierGraphPath": "/usr/lib/dotnet/sdk/10.0.110/PortableRuntimeIdentifierGraph.json",
         "packagesToPrune": {
           "Microsoft.AspNetCore": "(,10.0.32767]",
           "Microsoft.AspNetCore.Antiforgery": "(,10.0.32767]",
@@ -573,7 +573,7 @@
       "code": "NU1903",
       "level": "Warning",
       "warningLevel": 1,
-      "message": "Das Paket \"Microsoft.OpenApi\" 2.0.0 weist eine bekannte Hoch Schweregrad-Sicherheitsanfälligkeit auf, https://github.com/advisories/GHSA-v5pm-xwqc-g5wc.",
+      "message": "Package 'Microsoft.OpenApi' 2.0.0 has a known high severity vulnerability, https://github.com/advisories/GHSA-v5pm-xwqc-g5wc",
       "libraryId": "Microsoft.OpenApi",
       "targetGraphs": [
         "net10.0"
