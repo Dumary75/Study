@@ -16,6 +16,18 @@ var app = builder.Build();
 
 app.UseCors("AllowReactApp");
 
+app.Use(async (context, next) =>
+{
+    
+    System.Console.WriteLine("Anfrage kommt rein");
+
+    await next();
+
+    System.Console.WriteLine("Und Teil 2");
+
+});
+
+
 // Hier definierst du deine Routen
 app.MapGet("/testo", async (HttpContext context) => {
     await context.Response.WriteAsync(context.Request.QueryString.ToString());
