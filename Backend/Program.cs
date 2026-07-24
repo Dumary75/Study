@@ -12,31 +12,36 @@ builder.Services.AddCors(options =>
     });
 });
 
+builder.Services.AddTransient<MeineCustomMiddleware>();
+
 var app = builder.Build();
 
 app.UseCors("AllowReactApp");
 
-app.Use(async (context, next) =>
-{
-    
-    System.Console.WriteLine("Anfrage kommt rein");
 
-    await next();
 
-    System.Console.WriteLine("Und Teil 2");
-
-});
 
 
 // Hier definierst du deine Routen
 app.MapGet("/testo", async (HttpContext context) => {
     await context.Response.WriteAsync(context.Request.QueryString.ToString());
+
+
+    
+});
+
+app.UseWhen(context => context.Request.Path.StartsWithSegments("/arbeiter"), subApp => 
+{
+    // 2. ...dann schalte hier VORHER deine Custom Middleware dazwischen
+    subApp.UseMiddleware<MeineCustomMiddleware>();
 });
 
 app.MapGet("/arbeiter", () => 
 {
     // Hol dir die Daten aus deinem Repository
     var alleArbeiter = EmployeesRepository.GetEmployees(); // (Musst du natürlich passend benennen)
+
+
 
     // Gib sie direkt als JSON zurück
     return Results.Ok(alleArbeiter); 
