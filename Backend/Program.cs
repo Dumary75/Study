@@ -50,7 +50,7 @@ app.MapGet("/arbeiter", () =>
 app.MapPost("/arbeiter", (Employee emp) => 
 {
     EmployeesRepository.AddEmployee(emp);
-    return Results.Created($"/arbeiter/{emp.Id}", emp); // 201 Created als Antwort
+    return TypedResults.Created($"/arbeiter/{emp.Id}", emp); // 201 Created als Antwort
 });
 
 // Erst ganz am Ende starten
