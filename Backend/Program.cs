@@ -1,4 +1,8 @@
 
+using System.Reflection.Metadata.Ecma335;
+using Microsoft.AspNetCore.Http.HttpResults;
+using Microsoft.VisualBasic;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Hier definieren wir eine Richtlinie namens "AllowReactApp"
@@ -47,11 +51,23 @@ app.MapGet("/arbeiter", () =>
     return Results.Ok(alleArbeiter); 
 });
 
-app.MapPost("/arbeiter", (Employee emp) => 
+app.MapPost("/arbeiter", Results<Created<Employee> ,BadRequest<string>> (Employee emp) => 
 {
+    // Wir prüfen direkt das emp-Objekt (nicht dto.Employee, da das Objekt ja emp heißt)
+    if (string.IsNullOrEmpty(emp.Name))
+    {
+        // BadRequest gibt einen Status 400 zurück und kann einen einfachen String (oder ein Objekt) transportieren
+        return TypedResults.BadRequest("Der Name fehlt!");
+    }
+
     EmployeesRepository.AddEmployee(emp);
-    return TypedResults.Created($"/arbeiter/{emp.Id}", emp); // 201 Created als Antwort
+    return TypedResults.Created($"/arbeiter/{emp.Id}", emp); 
 });
+
+
+
+
+
 
 // Erst ganz am Ende starten
 app.Run(); 
