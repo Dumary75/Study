@@ -1,4 +1,5 @@
 
+using System.ComponentModel.DataAnnotations;
 using System.Reflection.Metadata.Ecma335;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.VisualBasic;
@@ -32,7 +33,17 @@ app.MapGet("/testo", async (HttpContext context) => {
 
 
     
-});
+}).AddEndpointFilter((async (context, next) =>
+{
+
+ System.Console.WriteLine("Filter greift, VOR durchgeben");
+
+ var result = await next(context);
+
+return result;
+
+    
+}));
 
 app.UseWhen(context => context.Request.Path.StartsWithSegments("/arbeiter"), subApp => 
 {
@@ -92,7 +103,7 @@ static class EmployeesRepository
 public class Employee
 {
     
-public required int Id {get; set;}  
+public int Id {get; set;}  
 public string  Name {get; set;}
 public string Position {get; set;}
 public double Salary {get; set;}
