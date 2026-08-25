@@ -17,6 +17,21 @@ builder.Services.AddCors(options =>
     });
 });
 
+builder.Services.AddHttpClient("TestClient", client =>
+{
+
+    client.BaseAddress = new Uri("https:beispie.de");
+
+    
+});
+
+
+builder.Services.AddHttpClient("WeatherAPI", client =>
+{
+    client.BaseAddress = new Uri("https://api.weatherprovider.com/");
+});
+
+
 builder.Services.AddTransient<MeineCustomMiddleware>();
 
 var app = builder.Build();
@@ -32,7 +47,6 @@ app.MapGet("/testo", async (HttpContext context) => {
     await context.Response.WriteAsync(context.Request.QueryString.ToString());
 
 
-    
 }).AddEndpointFilter((async (context, next) =>
 {
 
