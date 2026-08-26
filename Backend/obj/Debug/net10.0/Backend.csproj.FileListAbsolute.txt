@@ -32,3 +32,10 @@
 /home/cuan/Dokumente/Study/Backend/obj/Debug/net10.0/Backend.pdb
 /home/cuan/Dokumente/Study/Backend/obj/Debug/net10.0/Backend.genruntimeconfig.cache
 /home/cuan/Dokumente/Study/Backend/obj/Debug/net10.0/ref/Backend.dll
+/home/cuan/Dokumente/Study/Backend/bin/Debug/net10.0/Microsoft.Extensions.Http.Polly.dll
+/home/cuan/Dokumente/Study/Backend/bin/Debug/net10.0/Polly.dll
+/home/cuan/Dokumente/Study/Backend/bin/Debug/net10.0/Polly.Extensions.Http.dll
+/home/cuan/Dokumente/Study/Backend/bin/Debug/net10.0/Swashbuckle.AspNetCore.Swagger.dll
+/home/cuan/Dokumente/Study/Backend/bin/Debug/net10.0/Swashbuckle.AspNetCore.SwaggerGen.dll
+/home/cuan/Dokumente/Study/Backend/bin/Debug/net10.0/Swashbuckle.AspNetCore.SwaggerUI.dll
+/home/cuan/Dokumente/Study/Backend/bin/Debug/net10.0/Scalar.AspNetCore.dll

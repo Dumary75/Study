@@ -1,24 +1,20 @@
 {
   "version": 2,
-  "dgSpecHash": "e2PrxijokPU=",
+  "dgSpecHash": "93G/P2E3xW0=",
   "success": true,
   "projectFilePath": "/home/cuan/Dokumente/Study/Backend/Backend.csproj",
   "expectedPackageFiles": [
     "/home/cuan/.nuget/packages/microsoft.aspnetcore.openapi/10.0.9/microsoft.aspnetcore.openapi.10.0.9.nupkg.sha512",
-    "/home/cuan/.nuget/packages/microsoft.openapi/2.0.0/microsoft.openapi.2.0.0.nupkg.sha512"
+    "/home/cuan/.nuget/packages/microsoft.extensions.apidescription.server/10.0.0/microsoft.extensions.apidescription.server.10.0.0.nupkg.sha512",
+    "/home/cuan/.nuget/packages/microsoft.extensions.http.polly/10.0.11/microsoft.extensions.http.polly.10.0.11.nupkg.sha512",
+    "/home/cuan/.nuget/packages/microsoft.openapi/2.7.5/microsoft.openapi.2.7.5.nupkg.sha512",
+    "/home/cuan/.nuget/packages/polly/7.2.4/polly.7.2.4.nupkg.sha512",
+    "/home/cuan/.nuget/packages/polly.extensions.http/3.0.0/polly.extensions.http.3.0.0.nupkg.sha512",
+    "/home/cuan/.nuget/packages/scalar.aspnetcore/2.17.1/scalar.aspnetcore.2.17.1.nupkg.sha512",
+    "/home/cuan/.nuget/packages/swashbuckle.aspnetcore/10.2.3/swashbuckle.aspnetcore.10.2.3.nupkg.sha512",
+    "/home/cuan/.nuget/packages/swashbuckle.aspnetcore.swagger/10.2.3/swashbuckle.aspnetcore.swagger.10.2.3.nupkg.sha512",
+    "/home/cuan/.nuget/packages/swashbuckle.aspnetcore.swaggergen/10.2.3/swashbuckle.aspnetcore.swaggergen.10.2.3.nupkg.sha512",
+    "/home/cuan/.nuget/packages/swashbuckle.aspnetcore.swaggerui/10.2.3/swashbuckle.aspnetcore.swaggerui.10.2.3.nupkg.sha512"
   ],
-  "logs": [
-    {
-      "code": "NU1903",
-      "level": "Warning",
-      "message": "Package 'Microsoft.OpenApi' 2.0.0 has a known high severity vulnerability, https://github.com/advisories/GHSA-v5pm-xwqc-g5wc",
-      "projectPath": "/home/cuan/Dokumente/Study/Backend/Backend.csproj",
-      "warningLevel": 1,
-      "filePath": "/home/cuan/Dokumente/Study/Backend/Backend.csproj",
-      "libraryId": "Microsoft.OpenApi",
-      "targetGraphs": [
-        "net10.0"
-      ]
-    }
-  ]
+  "logs": []
 }

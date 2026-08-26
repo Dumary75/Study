@@ -3,8 +3,13 @@ using System.ComponentModel.DataAnnotations;
 using System.Reflection.Metadata.Ecma335;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.VisualBasic;
+using Polly;
+using Polly.Extensions.Http;
+using Scalar.AspNetCore;
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddOpenApi();
 
 // Hier definieren wir eine Richtlinie namens "AllowReactApp"
 builder.Services.AddCors(options =>
@@ -29,7 +34,11 @@ builder.Services.AddHttpClient("TestClient", client =>
 builder.Services.AddHttpClient("WeatherAPI", client =>
 {
     client.BaseAddress = new Uri("https://api.weatherprovider.com/");
-});
+})
+.AddTransientHttpErrorPolicy(policy => 
+    // Versuche es insgesamt 3 Mal. Warte zwischen den Versuchen exponentiell länger (z.B. 2s, 4s, 8s)
+    policy.WaitAndRetryAsync(3, retryAttempt => TimeSpan.FromSeconds(200))
+);
 
 
 builder.Services.AddTransient<MeineCustomMiddleware>();
@@ -39,7 +48,12 @@ var app = builder.Build();
 app.UseCors("AllowReactApp");
 
 
+if (app.Environment.IsDevelopment())
+{
+    app.MapOpenApi();
 
+    app.MapScalarApiReference();
+}
 
 
 // Hier definierst du deine Routen
@@ -74,7 +88,7 @@ app.MapGet("/arbeiter", () =>
 
     // Gib sie direkt als JSON zurück
     return Results.Ok(alleArbeiter); 
-});
+}).WithSummary("Als Beispiel");
 
 app.MapPost("/arbeiter", Results<Created<Employee> ,BadRequest<string>> (Employee emp) => 
 {
@@ -101,7 +115,7 @@ app.Run();
 
 static class EmployeesRepository
 {
-    private static  List<Employee> employees = new List<Employee>
+    private static  List<Employee> employees = new()
     {
         new Employee(1,"John Ratsch", "Irgendwas", 35000),
         new Employee(2,"MnopoloMan rich", "Jefe", 190000)  
