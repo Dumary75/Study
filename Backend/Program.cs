@@ -1,11 +1,5 @@
-
-using System.ComponentModel.DataAnnotations;
-using System.Reflection.Metadata.Ecma335;
-using Microsoft.AspNetCore.Http.HttpResults;
-using Microsoft.VisualBasic;
-using Polly;
-using Polly.Extensions.Http;
 using Scalar.AspNetCore;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -22,26 +16,15 @@ builder.Services.AddCors(options =>
     });
 });
 
-builder.Services.AddHttpClient("TestClient", client =>
-{
-
-    client.BaseAddress = new Uri("https:beispie.de");
-
-    
-});
 
 
-builder.Services.AddHttpClient("WeatherAPI", client =>
-{
-    client.BaseAddress = new Uri("https://api.weatherprovider.com/");
-})
-.AddTransientHttpErrorPolicy(policy => 
-    // Versuche es insgesamt 3 Mal. Warte zwischen den Versuchen exponentiell länger (z.B. 2s, 4s, 8s)
-    policy.WaitAndRetryAsync(3, retryAttempt => TimeSpan.FromSeconds(200))
+builder.Services.AddDbContext<AppDbContext>(options =>
+    options.UseMySql(
+        builder.Configuration.GetConnectionString("DefaultConnection"),
+        ServerVersion.AutoDetect(builder.Configuration.GetConnectionString("DefaultConnection"))
+    )
 );
 
-
-builder.Services.AddTransient<MeineCustomMiddleware>();
 
 var app = builder.Build();
 
@@ -55,56 +38,15 @@ if (app.Environment.IsDevelopment())
     app.MapScalarApiReference();
 }
 
-
-// Hier definierst du deine Routen
-app.MapGet("/testo", async (HttpContext context) => {
-    await context.Response.WriteAsync(context.Request.QueryString.ToString());
-
-
-}).AddEndpointFilter((async (context, next) =>
+app.MapGet("/api/arbeiter", async (AppDbContext db) =>
 {
 
- System.Console.WriteLine("Filter greift, VOR durchgeben");
+    var alleArbeiter = await db.Arbeiter.ToListAsync();
 
- var result = await next(context);
+    return TypedResults.Ok(alleArbeiter);
 
-return result;
 
-    
-}));
-
-app.UseWhen(context => context.Request.Path.StartsWithSegments("/arbeiter"), subApp => 
-{
-    // 2. ...dann schalte hier VORHER deine Custom Middleware dazwischen
-    subApp.UseMiddleware<MeineCustomMiddleware>();
 });
-
-app.MapGet("/arbeiter", () => 
-{
-    // Hol dir die Daten aus deinem Repository
-    var alleArbeiter = EmployeesRepository.GetEmployees(); // (Musst du natürlich passend benennen)
-
-
-
-    // Gib sie direkt als JSON zurück
-    return Results.Ok(alleArbeiter); 
-}).WithSummary("Als Beispiel");
-
-app.MapPost("/arbeiter", Results<Created<Employee> ,BadRequest<string>> (Employee emp) => 
-{
-    // Wir prüfen direkt das emp-Objekt (nicht dto.Employee, da das Objekt ja emp heißt)
-    if (string.IsNullOrEmpty(emp.Name))
-    {
-        // BadRequest gibt einen Status 400 zurück und kann einen einfachen String (oder ein Objekt) transportieren
-        return TypedResults.BadRequest("Der Name fehlt!");
-    }
-
-    EmployeesRepository.AddEmployee(emp);
-    return TypedResults.Created($"/arbeiter/{emp.Id}", emp); 
-});
-
-
-
 
 
 
@@ -112,40 +54,11 @@ app.MapPost("/arbeiter", Results<Created<Employee> ,BadRequest<string>> (Employe
 app.Run(); 
 
 
-
-static class EmployeesRepository
+public class Arbeiter
 {
-    private static  List<Employee> employees = new()
-    {
-        new Employee(1,"John Ratsch", "Irgendwas", 35000),
-        new Employee(2,"MnopoloMan rich", "Jefe", 190000)  
-    };
+    public int Id {get; set; }
+    public string Name {get; set;} = string.Empty;
 
-    public static List<Employee> GetEmployees() => employees;
-
-    public static void AddEmployee(Employee newEmp) => employees.Add(newEmp);
-
+    public string? Abteilung {get; set;}
 }
 
-
-public class Employee
-{
-    
-public int Id {get; set;}  
-public string  Name {get; set;}
-public string Position {get; set;}
-public double Salary {get; set;}
-
-
-
-public Employee (int id, string name, string position, double salary){
-
-     Id = id;
-     Name = name;
-     Position = position;
-     Salary = salary;
-
-
-    }
-
-};
