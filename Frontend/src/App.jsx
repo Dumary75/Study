@@ -8,13 +8,13 @@ function App() {
   const [mitarbeiter, setMitarbeiter] = useState([]);
 
   const holeDatenVomBackend = async () => {
-    const antwort = await fetch('http://localhost:5142/arbeiter');
+    const antwort = await fetch('http://localhost:5142/api/arbeiter');
     const daten = await antwort.json();
     setMitarbeiter(daten); // State-Update triggert das automatische Re-Rendering!
   };
 
 const addMitarbeiter = async (neuerMitarbeiter) => {
-  const response = await fetch('http://localhost:5142/arbeiter', {
+  const response = await fetch('http://localhost:5142/api/arbeiter', {
     method: 'POST', // Wichtig!
     headers: {
       'Content-Type': 'application/json' // .NET muss wissen, dass JSON kommt
@@ -33,7 +33,6 @@ const addMitarbeiter = async (neuerMitarbeiter) => {
     id: 322,
     name: "peter mafai",
     position: "Faulenzer",
-    salary: 20000
   };
 
   return (

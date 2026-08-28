@@ -28,11 +28,11 @@ namespace Backend.Migrations
 
                     MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("Abteilung")
-                        .HasColumnType("longtext");
-
                     b.Property<string>("Name")
                         .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("Position")
                         .HasColumnType("longtext");
 
                     b.HasKey("Id");

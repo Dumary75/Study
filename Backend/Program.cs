@@ -43,7 +43,19 @@ app.MapGet("/api/arbeiter", async (AppDbContext db) =>
 
     var alleArbeiter = await db.Arbeiter.ToListAsync();
 
-    return TypedResults.Ok(alleArbeiter);
+    return  TypedResults.Ok(alleArbeiter);
+
+
+});
+
+app.MapPost("/api/arbeiter", async (AppDbContext db, Arbeiter newArbeiter) =>
+{
+
+    db.Arbeiter.Add(newArbeiter);
+
+    await db.SaveChangesAsync();
+
+    return TypedResults.Created($"/api/arbeiter/{newArbeiter.Id}, newArbeiter wurde erstellt!");
 
 
 });
@@ -57,8 +69,18 @@ app.Run();
 public class Arbeiter
 {
     public int Id {get; set; }
+    
     public string Name {get; set;} = string.Empty;
 
-    public string? Abteilung {get; set;}
+    public string? Position {get; set;} 
+
+    public Arbeiter() {}
+
+    public Arbeiter(int id, string name, string position)
+    {
+        Id = id;
+        Name = name;
+        Position = position;
+    }
 }
 
