@@ -27,7 +27,6 @@ const addMitarbeiter = async (neuerMitarbeiter) => {
   }
 };
 
-  //int id, string name, string position, double salary)
 
   const mitarbeiter_Karl = {
     id: 322,

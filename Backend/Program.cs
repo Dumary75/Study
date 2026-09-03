@@ -55,7 +55,7 @@ app.MapPost("/api/arbeiter", async (AppDbContext db, Arbeiter newArbeiter) =>
 
     await db.SaveChangesAsync();
 
-    return TypedResults.Created($"/api/arbeiter/{newArbeiter.Id}, newArbeiter wurde erstellt!");
+    return TypedResults.Created($"{newArbeiter.Name} wurde erstellt!");
 
 
 });
@@ -76,7 +76,7 @@ public class Arbeiter
 
     public Arbeiter() {}
 
-    public Arbeiter(int id, string name, string position)
+    public Arbeiter(int id, string name, string? position)
     {
         Id = id;
         Name = name;
