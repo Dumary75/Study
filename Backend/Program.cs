@@ -44,7 +44,7 @@ app.MapGet("/api/arbeiter", async (AppDbContext db) =>
     var alleArbeiter = await db.Arbeiter.ToListAsync();
 
     return  TypedResults.Ok(alleArbeiter);
-
+    
 
 });
 
@@ -59,6 +59,7 @@ app.MapPost("/api/arbeiter", async (AppDbContext db, Arbeiter newArbeiter) =>
 
 
 });
+
 
 
 
