@@ -124,3 +124,8 @@
 /home/cuan/Dokumente/Study/Backend/bin/Debug/net10.0/tr/Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
 /home/cuan/Dokumente/Study/Backend/bin/Debug/net10.0/zh-Hans/Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
 /home/cuan/Dokumente/Study/Backend/bin/Debug/net10.0/zh-Hant/Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+/home/cuan/Dokumente/Study/Backend/bin/Debug/net10.0/Microsoft.Bcl.Cryptography.dll
+/home/cuan/Dokumente/Study/Backend/bin/Debug/net10.0/Microsoft.IdentityModel.Abstractions.dll
+/home/cuan/Dokumente/Study/Backend/bin/Debug/net10.0/Microsoft.IdentityModel.JsonWebTokens.dll
+/home/cuan/Dokumente/Study/Backend/bin/Debug/net10.0/Microsoft.IdentityModel.Logging.dll
+/home/cuan/Dokumente/Study/Backend/bin/Debug/net10.0/Microsoft.IdentityModel.Tokens.dll

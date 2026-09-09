@@ -1,6 +1,12 @@
 using Scalar.AspNetCore;
 using Microsoft.EntityFrameworkCore;
 
+
+using Microsoft.IdentityModel.JsonWebTokens;
+using Microsoft.IdentityModel.Tokens;
+using System.Security.Claims;
+using System.Text;
+
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddOpenApi();
@@ -61,10 +67,46 @@ app.MapPost("/api/arbeiter", async (AppDbContext db, Arbeiter newArbeiter) =>
 });
 
 
+app.MapPost("/api/test-login", (LoginRequest request) =>
+{
+
+    var claims = new List<Claim>
+    {
+        new Claim(ClaimTypes.Name, request.Username),
+        new Claim(ClaimTypes.Role, "Tester")  
+    };
+
+    var secretKeyString = builder.Configuration["SecretKey:key"]!;
+    var keyBytes = Encoding.UTF8.GetBytes(secretKeyString);
+    var credentials = new SigningCredentials(new SymmetricSecurityKey(keyBytes), SecurityAlgorithms.HmacSha256);
+
+    var tokenDescriptor = new SecurityTokenDescriptor
+    {
+        Subject = new ClaimsIdentity(claims),
+        Expires = DateTime.UtcNow.AddMinutes(20),
+        SigningCredentials = credentials
+    };
+
+    // 5. Token mit dem modernen Handler erzeugen
+    var tokenHandler = new JsonWebTokenHandler();
+    var tokenString = tokenHandler.CreateToken(tokenDescriptor);
+
+    // 6. Als JSON an den Client schicken
+    return Results.Ok(new 
+    { 
+        access_token = tokenString, 
+        message = $"Token erfolgreich generiert für {request.Username}!" 
+    });
+
+    
+});
+
 
 
 // Erst ganz am Ende starten
 app.Run(); 
+
+record LoginRequest(string Username, string Password);
 
 
 public class Arbeiter
