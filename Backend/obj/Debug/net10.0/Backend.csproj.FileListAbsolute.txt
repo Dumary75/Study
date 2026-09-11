@@ -129,3 +129,7 @@
 /home/cuan/Dokumente/Study/Backend/bin/Debug/net10.0/Microsoft.IdentityModel.JsonWebTokens.dll
 /home/cuan/Dokumente/Study/Backend/bin/Debug/net10.0/Microsoft.IdentityModel.Logging.dll
 /home/cuan/Dokumente/Study/Backend/bin/Debug/net10.0/Microsoft.IdentityModel.Tokens.dll
+/home/cuan/Dokumente/Study/Backend/bin/Debug/net10.0/Microsoft.AspNetCore.Authentication.JwtBearer.dll
+/home/cuan/Dokumente/Study/Backend/bin/Debug/net10.0/Microsoft.IdentityModel.Protocols.dll
+/home/cuan/Dokumente/Study/Backend/bin/Debug/net10.0/Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
+/home/cuan/Dokumente/Study/Backend/bin/Debug/net10.0/System.IdentityModel.Tokens.Jwt.dll

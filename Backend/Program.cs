@@ -1,7 +1,7 @@
 using Scalar.AspNetCore;
 using Microsoft.EntityFrameworkCore;
 
-
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.JsonWebTokens;
 using Microsoft.IdentityModel.Tokens;
 using System.Security.Claims;
@@ -31,10 +31,50 @@ builder.Services.AddDbContext<AppDbContext>(options =>
     )
 );
 
+builder.Services.AddAuthentication(options =>
+{
+    // Hier legst du optional fest, was der globale Standard sein soll
+    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+})
+.AddJwtBearer(options =>
+{
+    options.TokenValidationParameters = new TokenValidationParameters
+    {
+        ValidateIssuerSigningKey = true,
+        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["SecretKey:key"]!)),
+        ValidateLifetime = true,
+        ValidateIssuer = false,
+        ValidateAudience = false
+    };
+
+    options.Events = new JwtBearerEvents
+    {
+        OnAuthenticationFailed = context =>
+        {
+            Console.WriteLine($"JWT FEHLER: {context.Exception.Message}");
+            return Task.CompletedTask;
+        }
+    };
+})
+.AddCookie("MyNetflixSession", options =>
+{
+    options.Cookie.Name = "MyNetflixSession";
+    options.Cookie.HttpOnly = true;
+    options.Cookie.SecurePolicy = CookieSecurePolicy.Always;
+    options.Cookie.SameSite = SameSiteMode.Strict;
+    options.ExpireTimeSpan = TimeSpan.FromMinutes(60);
+    options.SlidingExpiration = true;
+});
+
+builder.Services.AddAuthorization();
 
 var app = builder.Build();
 
 app.UseCors("AllowReactApp");
+
+app.UseAuthentication();
+app.UseAuthorization();
 
 
 if (app.Environment.IsDevelopment())
@@ -47,9 +87,9 @@ if (app.Environment.IsDevelopment())
 app.MapGet("/api/arbeiter", async (AppDbContext db) =>
 {
 
-    var alleArbeiter = await db.Arbeiter.ToListAsync();
+    var Liste = await db.Arbeiter.ToListAsync();
 
-    return  TypedResults.Ok(alleArbeiter);
+    return  TypedResults.Ok($"Hier die Liste: {Liste}");
     
 
 });
@@ -79,6 +119,7 @@ app.MapPost("/api/test-login", (LoginRequest request) =>
     var secretKeyString = builder.Configuration["SecretKey:key"]!;
     var keyBytes = Encoding.UTF8.GetBytes(secretKeyString);
     var credentials = new SigningCredentials(new SymmetricSecurityKey(keyBytes), SecurityAlgorithms.HmacSha256);
+    
 
     var tokenDescriptor = new SecurityTokenDescriptor
     {
