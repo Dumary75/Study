@@ -1,9 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "iLNdVvJc0bg=",
+  "dgSpecHash": "0APP5GbwloQ=",
   "success": true,
   "projectFilePath": "/home/cuan/Dokumente/Study/backendTest/backendTest.csproj",
   "expectedPackageFiles": [
+    "/home/cuan/.nuget/packages/bcrypt.net-next/4.2.0/bcrypt.net-next.4.2.0.nupkg.sha512",
     "/home/cuan/.nuget/packages/humanizer.core/2.14.1/humanizer.core.2.14.1.nupkg.sha512",
     "/home/cuan/.nuget/packages/microsoft.aspnetcore.openapi/10.0.12/microsoft.aspnetcore.openapi.10.0.12.nupkg.sha512",
     "/home/cuan/.nuget/packages/microsoft.bcl.asyncinterfaces/7.0.0/microsoft.bcl.asyncinterfaces.7.0.0.nupkg.sha512",
