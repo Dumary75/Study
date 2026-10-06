@@ -1,8 +1,12 @@
 
+using Scalar.AspNetCore;
 using Microsoft.EntityFrameworkCore;
 using testAblauf;
 
 var builder = WebApplication.CreateBuilder(args);
+
+
+builder.Services.AddOpenApi();
 
 var connectionString =
     builder.Configuration.GetConnectionString("DefaultConnection")
@@ -14,13 +18,19 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 
 var app = builder.Build();
 
-
+app.MapUserEndpoints();
 
 
 if (app.Environment.IsDevelopment())
 {
+
+    app.MapOpenApi();
+    app.MapScalarApiReference();
    
 }
+
+
+
 
 
 
