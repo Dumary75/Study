@@ -122,3 +122,8 @@
 /home/cuan/Dokumente/Study/backendTest/bin/Debug/net10.0/zh-Hant/Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
 /home/cuan/Dokumente/Study/backendTest/bin/Debug/net10.0/Scalar.AspNetCore.dll
 /home/cuan/Dokumente/Study/backendTest/bin/Debug/net10.0/BCrypt-Net-Next.dll
+/home/cuan/Dokumente/Study/backendTest/bin/Debug/net10.0/Microsoft.Bcl.Cryptography.dll
+/home/cuan/Dokumente/Study/backendTest/bin/Debug/net10.0/Microsoft.IdentityModel.Abstractions.dll
+/home/cuan/Dokumente/Study/backendTest/bin/Debug/net10.0/Microsoft.IdentityModel.JsonWebTokens.dll
+/home/cuan/Dokumente/Study/backendTest/bin/Debug/net10.0/Microsoft.IdentityModel.Logging.dll
+/home/cuan/Dokumente/Study/backendTest/bin/Debug/net10.0/Microsoft.IdentityModel.Tokens.dll
