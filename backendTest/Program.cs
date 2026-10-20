@@ -15,8 +15,25 @@ var connectionString =
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString)));
 
+builder.Services.AddCors(options =>
+{
+
+   options.AddPolicy("AllowReact", policy =>
+   {
+       policy.WithOrigins("http://localhost:5173")
+            .AllowAnyMethod()
+            .AllowAnyHeader()
+            .AllowCredentials();
+   });
+
+});
+
+
 
 var app = builder.Build();
+
+
+app.UseCors("AllowReact");
 
 app.MapUserEndpoints();
 

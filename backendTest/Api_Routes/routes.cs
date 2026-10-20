@@ -35,10 +35,13 @@ public static class UserEndpoints
 
         });
 
-        app.MapDelete("/usersDelete", async (int id, AppDbContext db) => 
+        app.MapDelete("/usersDelete/{id}", async (int id, AppDbContext db) => 
         {
         
+
+
             var gefundenUser = await db.User.FirstOrDefaultAsync(foundUser => foundUser.Id == id);
+
 
             if (gefundenUser == null)
             {
