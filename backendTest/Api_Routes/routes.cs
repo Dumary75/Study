@@ -35,6 +35,27 @@ public static class UserEndpoints
 
         });
 
+        app.MapDelete("/usersDelete", async (int id, AppDbContext db) => 
+        {
+        
+            var gefundenUser = await db.User.FirstOrDefaultAsync(foundUser => foundUser.Id == id);
+
+            if (gefundenUser == null)
+            {
+                return TypedResults.NotFound();
+            }
+
+            db.User.Remove(gefundenUser);
+
+            await db.SaveChangesAsync();
+
+            
+
+
+
+        return Results.NoContent(); // 204 No Content ist Standard bei DELETE
+        });
+
 
         app.MapPost("/usersLogin", async (User user, AppDbContext db, HttpContext  httpContext) =>
         {
