@@ -5,3 +5,27 @@ body {
   background-color: #000;
   color: #FFF;
 }
+
+
+
+.anderungButton{
+  margin-left: 1rem;
+}
+
+li {
+  margin-bottom: 0.5rem;
+}
+
+.userAusgabe {
+  margin: 0.5rem;
+  border: solid 0.1rem #fff;
+  padding: 2rem;
+  width: 20%;
+}
+
+.userCreateForm{
+  margin: 5rem;
+  border: solid 0.1rem blueviolet;
+  padding: 2rem;
+  width: 10%;
+}

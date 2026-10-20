@@ -1,46 +1,44 @@
-import { useState } from "react"
+import { useState } from "react";
 
+import { type User } from "./interfaces/interfaces";
+
+import { CreateUserForm } from "./buttons/createUser";
+import { UserButton } from "./buttons/gateDataButton"; 
+import { LoschenButton } from "./buttons/loschenButton";
 
 function App() {
-  const[liste, setListe] = useState([]);
+  const [liste, setListe] = useState<User[]>([]);
 
-
-async function datenHolen(){
-  try {
-  const daten = await fetch("http://localhost:5298/api/dein-endpunkt", {
-    credentials: "include" // <--- Das schaltet die automatische Cookie-Übertragung ein!
-  })
-  const fertigeDaten = await daten.json();
-  setListe(fertigeDaten);
-  } catch (error){
-      if(error instanceof Error){
-        console.log(error.message);
-      } else {
-        console.log("Irgendein Fehler!")
-      }
-  }
-};
-
-
-
+  // ... deine fetch-Logik etc. ...
 
   return (
     <>
-    <h1>Die Liste</h1>
-    <br />
-
-    <button onClick={datenHolen}>HolleDaten</button>
-
-    <br />
-
-    <ul>
-       {liste.map(daten => <li>{daten}</li>)}
-    </ul>
+      <h1>Fullstack Test</h1>
 
 
-      
-    </>  
-  )
+<div className="userAusgabe">
+            <UserButton 
+              setListe={setListe} 
+            />
+
+      <ul>
+        {liste.map(einzelerUser => (
+          <li key={einzelerUser.id}>
+            <span>{einzelerUser.name}</span>
+            <LoschenButton id={einzelerUser.id} />
+          </li> 
+        ))}
+      </ul> 
+
+</div>
+
+
+
+        <CreateUserForm />
+
+
+    </>
+  );
 }
 
-export default App
+export default App;
