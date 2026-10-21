@@ -1,9 +1,12 @@
 
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.JsonWebTokens;
 using Microsoft.IdentityModel.Tokens;
 using System.Security.Claims;
 using System.Text;
+
+
 
 namespace testAblauf;
 
@@ -11,8 +14,11 @@ namespace testAblauf;
 public static class UserEndpoints
 {
     
+    
     public static void MapUserEndpoints(this WebApplication app)
     {
+
+        
         
         app.MapGet("/usersGet", async (AppDbContext db) => {
 
@@ -60,7 +66,7 @@ public static class UserEndpoints
         });
 
 
-        app.MapPost("/usersLogin", async (User user, AppDbContext db, HttpContext  httpContext) =>
+        app.MapPost("/usersLogin", async (User user, AppDbContext db, HttpContext  httpContext, IConfiguration configuration) =>
         {
             var echterUser = await db.User.FirstOrDefaultAsync(a => a.Name == user.Name);
 
@@ -75,7 +81,7 @@ public static class UserEndpoints
             new Claim(ClaimTypes.Name, echterUser.Name)
         };
 
-        var secretKey = "DeinExtremGeheimerUndMindestens32ZeichenLangerKey!";
+        var secretKey = configuration["Jwt:Key"]!;
         var keyBytes = Encoding.UTF8.GetBytes(secretKey);
         var symmetricKey = new SymmetricSecurityKey(keyBytes);
         var credentials = new SigningCredentials(symmetricKey, SecurityAlgorithms.HmacSha256);
@@ -103,7 +109,13 @@ public static class UserEndpoints
         });
 
 
+        app.MapGet("/authcheck", async (HttpContext context) =>
+        {
 
+            return Results.Ok(new { isAuthenticated = true });
+
+        })
+        .RequireAuthorization(); 
 
     }
 };
