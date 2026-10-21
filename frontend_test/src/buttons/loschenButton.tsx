@@ -12,7 +12,7 @@ const response = await fetch(`http://localhost:5298/usersDelete/${id}`, {
 
       
       if (response.ok) {
-        console.log("User erfolgreich gelöscht!");
+        alert("User erfolgreich gelöscht!");
       }
     } catch (error) {
       console.log(error);

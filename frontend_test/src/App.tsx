@@ -1,15 +1,41 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 import { type User } from "./interfaces/interfaces";
 
 import { CreateUserForm } from "./buttons/createUser";
 import { UserButton } from "./buttons/gateDataButton"; 
 import { LoschenButton } from "./buttons/loschenButton";
+import { LoginUserForm } from "./buttons/loginUserButton";
 
 function App() {
   const [liste, setListe] = useState<User[]>([]);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
-  // ... deine fetch-Logik etc. ...
+    useEffect(() => {
+      async function checkAuth(){
+        try {
+          const response = await fetch("http://localhost:5298/authcheck", {
+            method: "GET",
+            credentials: "include"
+          });
+
+
+          if(response.ok){
+            setIsLoggedIn(true);
+          } else {
+          setIsLoggedIn(false);
+        } 
+
+
+        } catch (error){
+          setIsLoggedIn(false);
+        }
+      }
+
+      checkAuth();
+
+
+  },[]);
 
   return (
     <>
@@ -35,7 +61,9 @@ function App() {
 
 
         <CreateUserForm />
+        <LoginUserForm />
 
+        <div>{isLoggedIn? <p>Du bist eingeloggt</p> : <p>Du bist ausgeloggt</p>}</div>
 
     </>
   );

@@ -18,7 +18,7 @@ export function CreateUserForm() {
       });
 
       if (response.ok) {
-        console.log("User erfolgreich erstellt!");
+        alert(`${name} erfolgreich erstellt!`);
       }
     } catch (error) {
       console.log(error);
