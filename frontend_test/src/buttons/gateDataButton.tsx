@@ -9,7 +9,7 @@ interface UserButtonProps {
 
 
 // 3. Die Komponente nimmt die Props entgegen
-export function UserButton( {setListe} : UserButtonProps ) {
+export function GateDataButton( {setListe} : UserButtonProps ) {
   
 
   async function datenHolen() {

@@ -18,7 +18,7 @@ public static class UserEndpoints
     public static void MapUserEndpoints(this WebApplication app)
     {
 
-        
+        // -- User Funktionen Allgemein --//
         
         app.MapGet("/usersGet", async (AppDbContext db) => {
 
@@ -66,6 +66,7 @@ public static class UserEndpoints
         });
 
 
+        // -- Riesiger Login Block um JWT in Cookie zu returnen -- //
         app.MapPost("/usersLogin", async (User user, AppDbContext db, HttpContext  httpContext, IConfiguration configuration) =>
         {
             var echterUser = await db.User.FirstOrDefaultAsync(a => a.Name == user.Name);
@@ -109,6 +110,7 @@ public static class UserEndpoints
         });
 
 
+        // -- AutoCheck bei Website Aufruf -- //
         app.MapGet("/authcheck", async (HttpContext context) =>
         {
 
@@ -116,6 +118,43 @@ public static class UserEndpoints
 
         })
         .RequireAuthorization(); 
+
+
+        // -- Profil-Section -- //
+
+        app.MapGet("/myProfiles", async (HttpContext context, AppDbContext db) =>
+        {
+            var userIdString = context.User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value;
+            int.TryParse(userIdString, out int userId);
+
+            // 🔑 .Where(...) statt .FirstOrDefault(...) + .ToListAsync() macht daraus eine Liste!
+            var userProfiles = await db.Profiles
+                .Where(p => p.UserId == userId)
+                .ToListAsync();
+
+            return Results.Ok(userProfiles); // Gibt ein JSON-Array [] zurück
+        })
+        .RequireAuthorization();
+
+
+        
+
+        app.MapPost("/profilCreate", async (Profile profile, HttpContext context, AppDbContext db) =>
+        {
+            var userIdString = context.User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value;
+            int.TryParse(userIdString, out int userId);
+
+            // Jetzt kennt er `profile` (und du musst ihm noch die `UserId` zuweisen):
+            profile.UserId = userId;
+
+            db.Profiles.Add(profile);
+            await db.SaveChangesAsync();
+
+            return Results.Created("", profile);
+        })
+        .RequireAuthorization();
+
+
 
     }
 };

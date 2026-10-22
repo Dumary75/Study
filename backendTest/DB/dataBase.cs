@@ -12,4 +12,5 @@ namespace testAblauf;
         }
 
         public DbSet<User> User => Set<User>();
+        public DbSet<Profile> Profiles => Set<Profile>();
     }
