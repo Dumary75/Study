@@ -16,7 +16,7 @@ export function Profiles() {
         });
 
         const fertigeProfile = await response.json();
-        setProfiles(fertigeProfile);
+        setProfiles(fertigeProfile); 
       } catch (error) {
         console.log(error);
       }
