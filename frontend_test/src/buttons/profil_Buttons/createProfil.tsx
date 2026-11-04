@@ -1,8 +1,12 @@
 import { useState } from "react";
 
-export function CreateProfilForm() {
-  const [bio, setBio] = useState("");
-  const [ProfilePictureUrl, setProfilePictureUrl] = useState("");
+interface CreateProfilFormProps {
+  onCreated: () => void;
+}
+
+export function CreateProfilForm({ onCreated }: CreateProfilFormProps) {
+  const [name, setName] = useState("");
+  const [profilePictureUrl, setProfilePictureUrl] = useState("");
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault(); // Verhindert das Neuladen der Seite
@@ -14,11 +18,14 @@ export function CreateProfilForm() {
         headers: {
           "Content-Type": "application/json"
         },
-        body: JSON.stringify({ bio, ProfilePictureUrl })
+        body: JSON.stringify({ name, profilePictureUrl })
       });
 
       if (response.ok) {
-        alert(`${bio} erfolgreich erstellt!`);
+        alert(`${name} erfolgreich erstellt!`);
+        setName("");
+        setProfilePictureUrl("");
+        onCreated();
       }
     } catch (error) {
       console.log(error);
@@ -33,8 +40,8 @@ export function CreateProfilForm() {
           <input 
             type="text" 
             id="profilname"
-            value={bio} 
-            onChange={(e) => setBio(e.target.value)} 
+            value={name} 
+            onChange={(e) => setName(e.target.value)} 
           />
         </div>
 
@@ -42,7 +49,7 @@ export function CreateProfilForm() {
           <label htmlFor="profilPicture">Profil_Picture</label>
           <input 
             id="profilPicture"
-            value={ProfilePictureUrl} 
+            value={profilePictureUrl} 
             onChange={(e) => setProfilePictureUrl(e.target.value)} 
           />
         </div>

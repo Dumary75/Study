@@ -1,6 +1,10 @@
 import { useState } from "react";
 
-export function LoginUserForm() {
+interface LoginUserFormProps {
+  onLogin: () => void;
+}
+
+export function LoginUserForm({ onLogin }: LoginUserFormProps) {
   const [name, setName] = useState("");
   const [password, setPassword] = useState("");
 
@@ -19,6 +23,7 @@ export function LoginUserForm() {
 
       if (response.ok) {
         alert(`${name} erfolgreich eingeloggt!`);
+        onLogin();
       }
     } catch (error) {
       console.log(error);

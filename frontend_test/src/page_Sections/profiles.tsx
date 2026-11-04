@@ -1,51 +1,75 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { type Profil } from "../interfaces/interfaces";
 import { CreateProfilForm } from "../buttons/profil_Buttons/createProfil";
 
-export function Profiles() {
+interface ProfilesProps {
+  aktivesProfilId: number;
+  onProfileDeleted: () => void;
+}
+
+export function Profiles({ aktivesProfilId, onProfileDeleted }: ProfilesProps) {
   const [profiles, setProfiles] = useState<Profil[]>([]);
-  // Wir speichern die ID des angeklickten Profils (oder null, wenn keins offen ist)
-  const [activeId, setActiveId] = useState<number | null>(null);
+
+  const profileHollen = useCallback(async () => {
+    try {
+      const response = await fetch("http://localhost:5298/myProfiles", {
+        method: "GET",
+        credentials: "include"
+      });
+
+      if (!response.ok) {
+        return;
+      }
+
+      const fertigeProfile = await response.json();
+      setProfiles(fertigeProfile); 
+    } catch (error) {
+      console.log(error);
+    }
+  }, []);
 
   useEffect(() => {
-    async function profileHollen() {
-      try {
-        const response = await fetch("http://localhost:5298/myProfiles", {
-          method: "GET",
-          credentials: "include"
-        });
-
-        const fertigeProfile = await response.json();
-        setProfiles(fertigeProfile); 
-      } catch (error) {
-        console.log(error);
-      }
-    }
-
     profileHollen();
-  }, []);
+  }, [profileHollen]);
+
+  async function profilLoschen(id: number) {
+    try {
+      const response = await fetch(`http://localhost:5298/profiles/${id}`, {
+        method: "DELETE",
+        credentials: "include"
+      });
+
+      if (response.ok) {
+        await profileHollen();
+        onProfileDeleted();
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }
 
   return (
     <>
       <div className="profil_ausgabe">
+        <h2>Profile verwalten</h2>
+
         {profiles.length > 0 ? (
           <ul>
             {profiles.map(profil => (
-              <li
-                key={profil.id}
-                className="profil_gelisted"
-                // Klick öffnet/schließt genau dieses spezifische Profil
-                onClick={() => setActiveId(activeId === profil.id ? null : profil.id)}
-              >
-                {/* Linke Seite: Bio */}
-                <div>{profil.bio}</div>
-                <div>{profil.ProfilePictureUrl}</div>
+              <li key={profil.id} className="profil_gelisted">
+                {/* Linke Seite: Name (+ Markierung des aktiven Profils) */}
+                <div>
+                  {profil.name}
+                  {profil.id === aktivesProfilId && (
+                    <span className="aktives_profil"> (aktiv)</span>
+                  )}
+                </div>
+                <div>{profil.profilePictureUrl}</div>
 
-                {/* Rechte Seite: Taucht jetzt DANEBEN auf */}
-                {activeId === profil.id && (
+                {/* Löschen nur fürs aktive Profil – der Rest läuft über die Profilwahl */}
+                {profil.id === aktivesProfilId && (
                   <div className="profil-aktionen">
-                    <span>MyList</span>
-                    <span>Löschen</span>
+                    <span onClick={() => profilLoschen(profil.id)}>Löschen</span>
                   </div>
                 )}
               </li>
@@ -57,7 +81,7 @@ export function Profiles() {
       </div>
 
       <br />
-      <CreateProfilForm />
+      <CreateProfilForm onCreated={profileHollen} />
     </>
   );
 }

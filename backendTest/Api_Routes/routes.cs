@@ -1,5 +1,3 @@
-
-using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.JsonWebTokens;
 using Microsoft.IdentityModel.Tokens;
@@ -13,13 +11,55 @@ namespace testAblauf;
 
 public static class UserEndpoints
 {
-    
-    
+    private const string CookieName = "test_token";
+
+    private static CookieOptions CookieOptionen() => new CookieOptions
+    {
+        HttpOnly = true,
+        Secure = false,
+        SameSite = SameSiteMode.Strict,
+        Expires = DateTime.UtcNow.AddHours(1)
+    };
+
+    // Ein JWT lässt sich nicht nachträglich ändern (die Signatur würde brechen),
+    // deshalb wird bei der Profilwahl ein neues Token ausgestellt und das alte
+    // Cookie ersetzt. profileId = null bedeutet: noch kein Profil gewählt.
+    private static void TokenInCookieSchreiben(HttpContext httpContext, IConfiguration configuration,
+        int userId, string userName, int? profileId)
+    {
+        var claims = new List<Claim>
+        {
+            new Claim(ClaimTypes.NameIdentifier, userId.ToString()),
+            new Claim(ClaimTypes.Name, userName)
+        };
+
+        if (profileId.HasValue)
+        {
+            claims.Add(new Claim("profile_id", profileId.Value.ToString()));
+        }
+
+        var keyBytes = Encoding.UTF8.GetBytes(configuration["Jwt:Key"]!);
+        var credentials = new SigningCredentials(new SymmetricSecurityKey(keyBytes), SecurityAlgorithms.HmacSha256);
+
+        var tokenDescriptor = new SecurityTokenDescriptor
+        {
+            Subject = new ClaimsIdentity(claims),
+            Expires = DateTime.UtcNow.AddHours(1),
+            SigningCredentials = credentials
+        };
+
+        var handler = new JsonWebTokenHandler();
+        string tokenString = handler.CreateToken(tokenDescriptor);
+
+        httpContext.Response.Cookies.Append(CookieName, tokenString, CookieOptionen());
+    }
+
+
     public static void MapUserEndpoints(this WebApplication app)
     {
 
         // -- User Funktionen Allgemein --//
-        
+
         app.MapGet("/usersGet", async (AppDbContext db) => {
 
         var users = await db.User.ToListAsync();
@@ -41,10 +81,8 @@ public static class UserEndpoints
 
         });
 
-        app.MapDelete("/usersDelete/{id}", async (int id, AppDbContext db) => 
+        app.MapDelete("/usersDelete/{id}", async (int id, AppDbContext db) =>
         {
-        
-
 
             var gefundenUser = await db.User.FirstOrDefaultAsync(foundUser => foundUser.Id == id);
 
@@ -54,11 +92,9 @@ public static class UserEndpoints
                 return TypedResults.NotFound();
             }
 
-            db.User.Remove(gefundenUser);
+            db.User.Remove(gefundenUser); // Profile + MyList hängen per Cascade dran
 
             await db.SaveChangesAsync();
-
-            
 
 
 
@@ -66,7 +102,7 @@ public static class UserEndpoints
         });
 
 
-        // -- Riesiger Login Block um JWT in Cookie zu returnen -- //
+        // -- Login Block um JWT in Cookie zu returnen -- //
         app.MapPost("/usersLogin", async (User user, AppDbContext db, HttpContext  httpContext, IConfiguration configuration) =>
         {
             var echterUser = await db.User.FirstOrDefaultAsync(a => a.Name == user.Name);
@@ -76,56 +112,55 @@ public static class UserEndpoints
                 return Results.Unauthorized();
             }
 
-        var claims = new List<Claim>
-        {
-            new Claim(ClaimTypes.NameIdentifier, echterUser.Id.ToString()),
-            new Claim(ClaimTypes.Name, echterUser.Name)
-        };
+            // Direkt nach dem Login ist noch kein Profil gewählt -> kein profile_id-Claim.
+            TokenInCookieSchreiben(httpContext, configuration, echterUser.Id, echterUser.Name, null);
 
-        var secretKey = configuration["Jwt:Key"]!;
-        var keyBytes = Encoding.UTF8.GetBytes(secretKey);
-        var symmetricKey = new SymmetricSecurityKey(keyBytes);
-        var credentials = new SigningCredentials(symmetricKey, SecurityAlgorithms.HmacSha256);
-
-        var tokenDescriptor = new SecurityTokenDescriptor
-        {
-            Subject = new ClaimsIdentity(claims),
-            Expires = DateTime.UtcNow.AddHours(1),
-            SigningCredentials = credentials
-        };
-        
-        var handler = new JsonWebTokenHandler();
-        string tokenString = handler.CreateToken(tokenDescriptor);
-
-        httpContext.Response.Cookies.Append("test_token", tokenString, new CookieOptions
-        {
-            HttpOnly = true,
-            Secure = false,
-            SameSite = SameSiteMode.Strict,
-            Expires =  DateTime.UtcNow.AddHours(1)
-        });
-            
         return TypedResults.Ok($"{echterUser.Name} Wurde erfolgreich eingeloggt!");
-            
+
+        });
+
+
+        // -- Logout: Cookie löschen -- //
+        app.MapPost("/usersLogout", (HttpContext httpContext) =>
+        {
+            httpContext.Response.Cookies.Delete(CookieName, new CookieOptions
+            {
+                HttpOnly = true,
+                Secure = false,
+                SameSite = SameSiteMode.Strict
+            });
+
+            return TypedResults.Ok("Erfolgreich ausgeloggt!");
         });
 
 
         // -- AutoCheck bei Website Aufruf -- //
-        app.MapGet("/authcheck", async (HttpContext context) =>
+        app.MapGet("/authcheck", async (HttpContext context, AppDbContext db) =>
         {
+            var userId = context.User.GetUserId();
+            var profileId = context.User.GetProfileId();
 
-            return Results.Ok(new { isAuthenticated = true });
+            Profile? aktivesProfil = null;
+
+            // Das Profil kommt frisch aus der DB: existiert es nicht mehr (gelöscht),
+            // gilt es als nicht ausgewählt und das Frontend zeigt wieder die Auswahl.
+            if (userId.HasValue && profileId.HasValue)
+            {
+                aktivesProfil = await db.Profiles
+                    .FirstOrDefaultAsync(p => p.Id == profileId.Value && p.UserId == userId.Value);
+            }
+
+            return Results.Ok(new { isAuthenticated = true, activeProfile = aktivesProfil });
 
         })
-        .RequireAuthorization(); 
+        .RequireAuthorization();
 
 
         // -- Profil-Section -- //
 
         app.MapGet("/myProfiles", async (HttpContext context, AppDbContext db) =>
         {
-            var userIdString = context.User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value;
-            int.TryParse(userIdString, out int userId);
+            var userId = context.User.GetUserId();
 
             // 🔑 .Where(...) statt .FirstOrDefault(...) + .ToListAsync() macht daraus eine Liste!
             var userProfiles = await db.Profiles
@@ -137,15 +172,16 @@ public static class UserEndpoints
         .RequireAuthorization();
 
 
-        
-
         app.MapPost("/profilCreate", async (Profile profile, HttpContext context, AppDbContext db) =>
         {
-            var userIdString = context.User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value;
-            int.TryParse(userIdString, out int userId);
+            var userId = context.User.GetUserId();
+            if (userId == null)
+            {
+                return Results.Unauthorized();
+            }
 
-            // Jetzt kennt er `profile` (und du musst ihm noch die `UserId` zuweisen):
-            profile.UserId = userId;
+            profile.Id = 0;
+            profile.UserId = userId.Value;
 
             db.Profiles.Add(profile);
             await db.SaveChangesAsync();
@@ -155,9 +191,123 @@ public static class UserEndpoints
         .RequireAuthorization();
 
 
+        // -- Profil auswählen: Besitz einmalig prüfen, dann Token mit profile_id -- //
+
+        app.MapPost("/profiles/select/{id}", async (int id, HttpContext context, AppDbContext db, IConfiguration configuration) =>
+        {
+            var userId = context.User.GetUserId();
+            if (userId == null)
+            {
+                return Results.Unauthorized();
+            }
+
+            var profil = await db.Profiles
+                .FirstOrDefaultAsync(p => p.Id == id && p.UserId == userId.Value);
+
+            if (profil == null)
+            {
+                return Results.NotFound();
+            }
+
+            TokenInCookieSchreiben(context, configuration, userId.Value, context.User.Identity?.Name ?? "", profil.Id);
+
+            return Results.Ok(profil);
+        })
+        .RequireAuthorization();
+
+
+        app.MapDelete("/profiles/{id}", async (int id, HttpContext context, AppDbContext db) =>
+        {
+            var userId = context.User.GetUserId();
+            if (userId == null)
+            {
+                return Results.Unauthorized();
+            }
+
+            var profil = await db.Profiles
+                .FirstOrDefaultAsync(p => p.Id == id && p.UserId == userId.Value);
+
+            if (profil == null)
+            {
+                return Results.NotFound();
+            }
+
+            db.Profiles.Remove(profil); // MyList hängt per Cascade dran
+            await db.SaveChangesAsync();
+
+            return Results.NoContent();
+        })
+        .RequireAuthorization();
+
+
+        // -- MyList: gehört immer zu dem Profil aus dem Token -- //
+
+        app.MapGet("/myList", async (HttpContext context, AppDbContext db) =>
+        {
+            var profileId = context.User.GetProfileId();
+            if (profileId == null)
+            {
+                return Results.BadRequest("Kein Profil ausgewählt!");
+            }
+
+            var eintraege = await db.MyListItems
+                .Where(m => m.ProfileId == profileId.Value)
+                .OrderByDescending(m => m.Id) // neueste zuerst, kein Datums-Feld nötig
+                .ToListAsync();
+
+            return Results.Ok(eintraege);
+        })
+        .RequireAuthorization();
+
+
+        app.MapPost("/myList", async (MyListItem item, HttpContext context, AppDbContext db) =>
+        {
+            var profileId = context.User.GetProfileId();
+            if (profileId == null)
+            {
+                return Results.BadRequest("Kein Profil ausgewählt!");
+            }
+
+            // Dem Client wird nicht geglaubt: Id und ProfileId kommen vom Server.
+            item.Id = 0;
+            item.ProfileId = profileId.Value;
+            item.Profile = null;
+
+            db.MyListItems.Add(item);
+            await db.SaveChangesAsync();
+
+            return Results.Created($"/myList/{item.Id}", item);
+        })
+        .RequireAuthorization();
+
+
+        app.MapDelete("/myList/{id}", async (int id, HttpContext context, AppDbContext db) =>
+        {
+            var profileId = context.User.GetProfileId();
+            if (profileId == null)
+            {
+                return Results.BadRequest("Kein Profil ausgewählt!");
+            }
+
+            var eintrag = await db.MyListItems
+                .FirstOrDefaultAsync(m => m.Id == id && m.ProfileId == profileId.Value);
+
+            if (eintrag == null)
+            {
+                return Results.NotFound();
+            }
+
+            db.MyListItems.Remove(eintrag);
+            await db.SaveChangesAsync();
+
+            return Results.NoContent();
+        })
+        .RequireAuthorization();
 
     }
 };
+
+
 
 
 
